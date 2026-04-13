@@ -372,9 +372,7 @@ let books = [
   {"Titulo":"From Rings and Modules to Hopf Algebras","ISBN":"9783031500619","Autor":"Broue, M.","Editorial":"Springer","Año":2024}
 ];
 
-// Cache
-const coverCache = {};
-const summaryCache = {};
+// Cache (legacy - ahora usa bookCache del servidor)
 
 // ── INIT ──────────────────────────────────────────────────────────────
 function init() {
@@ -445,6 +443,21 @@ function renderGrid() {
   });
 }
 
+// ── SERVIDOR LOCAL ─────────────────────────────────────────────────────
+const SERVER_URL = 'http://localhost:3000';
+const bookCache = {};
+
+async function fetchFromServer(isbn) {
+  if (bookCache[isbn]) return bookCache[isbn];
+  try {
+    const r = await fetch(`${SERVER_URL}/api/books/${isbn}`);
+    if (!r.ok) return null;
+    const d = await r.json();
+    bookCache[isbn] = d;
+    return d;
+  } catch(e) { return null; }
+}
+
 // ── MODAL ──────────────────────────────────────────────────────────────
 let currentBook = null;
 
@@ -453,12 +466,9 @@ async function openModal(book) {
   document.getElementById('overlay').classList.add('active');
 
   const hasISBN = book.ISBN && book.ISBN !== 'Sin ISBN';
-  const coverUrl = hasISBN ? `https://covers.openlibrary.org/b/isbn/${book.ISBN}-L.jpg` : null;
 
-  document.getElementById('modalCover').innerHTML = coverUrl
-    ? `<img src="${coverUrl}" alt="Portada" onerror="this.outerHTML='<div class=cover-placeholder style=padding:2rem><div class=cover-icon>📖</div>${escHtml(book.Titulo)}</div>'">`
-    : `<div class="cover-placeholder"><div class="cover-icon">📖</div>${escHtml(book.Titulo)}</div>`;
-
+  document.getElementById('modalCover').innerHTML =
+    `<div class="cover-placeholder"><div class="cover-icon">📖</div>${escHtml(book.Titulo)}</div>`;
   document.getElementById('modalTitle').textContent = book.Titulo;
   document.getElementById('modalAuthor').textContent = book.Autor;
   document.getElementById('modalMeta').innerHTML = `
@@ -467,32 +477,25 @@ async function openModal(book) {
     ${hasISBN ? `<span class="meta-pill"><strong>ISBN:</strong> ${book.ISBN}</span>` : ''}
   `;
   document.getElementById('modalIsbn').textContent = hasISBN ? `ISBN: ${book.ISBN}` : 'Sin ISBN registrado';
+  document.getElementById('modalSummary').innerHTML = '<div class="summary-loading"><div class="spinner"></div> Consultando servidor…</div>';
 
-  // Summary
-  document.getElementById('modalSummary').innerHTML = '<div class="summary-loading"><div class="spinner"></div> Buscando descripción…</div>';
+  let cover = null, desc = null;
 
-  if (summaryCache[book.ISBN || book.Titulo]) {
-    document.getElementById('modalSummary').textContent = summaryCache[book.ISBN || book.Titulo];
-    return;
-  }
-
-  // Try Open Library first
-  let desc = null;
   if (hasISBN) {
-    try {
-      const olRes = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${book.ISBN}&format=json&jscmd=data`);
-      const olData = await olRes.json();
-      const olBook = olData[`ISBN:${book.ISBN}`];
-      if (olBook && olBook.excerpts && olBook.excerpts[0]) {
-        desc = olBook.excerpts[0].text;
-      } else if (olBook && olBook.notes) {
-        desc = typeof olBook.notes === 'string' ? olBook.notes : olBook.notes.value;
-      }
-    } catch(e) {}
+    const data = await fetchFromServer(book.ISBN);
+    if (data) { cover = data.cover || null; desc = data.description || null; }
   }
 
-  if (!desc) {
-    // Generate with Claude
+  if (currentBook !== book) return;
+
+  if (cover) {
+    document.getElementById('modalCover').innerHTML =
+      `<img src="${cover}" alt="Portada" onerror="this.outerHTML='<div class=cover-placeholder style=padding:2rem><div class=cover-icon>📖</div>${escHtml(book.Titulo)}</div>'">`;
+  }
+
+  if (desc) {
+    document.getElementById('modalSummary').textContent = desc;
+  } else {
     document.getElementById('modalSummary').innerHTML = '<div class="summary-loading"><div class="spinner"></div> Generando resumen con IA…</div>';
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -503,27 +506,22 @@ async function openModal(book) {
           max_tokens: 1000,
           messages: [{
             role: 'user',
-            content: `Genera un resumen académico conciso (3-4 oraciones) en español para el siguiente libro de biblioteca:
+            content: `Genera un resumen académico conciso (3-4 oraciones) en español para este libro:
 Título: ${book.Titulo}
 Autor: ${book.Autor}
 Editorial: ${book.Editorial}
 Año: ${book.Año}
-ISBN: ${book.ISBN}
 
-El resumen debe describir el contenido y la relevancia académica del libro. Responde SOLO con el resumen, sin presentaciones ni comillas.`
+Responde SOLO con el resumen, sin presentaciones ni comillas.`
           }]
         })
       });
-      const data = await response.json();
-      desc = data.content?.[0]?.text || 'No se pudo generar el resumen.';
+      const d = await response.json();
+      desc = d.content?.[0]?.text || 'No se encontró descripción para este título.';
     } catch(e) {
-      desc = 'No se pudo obtener el resumen en este momento.';
+      desc = 'No se encontró descripción para este título.';
     }
-  }
-
-  summaryCache[book.ISBN || book.Titulo] = desc;
-  if (currentBook === book) {
-    document.getElementById('modalSummary').textContent = desc;
+    if (currentBook === book) document.getElementById('modalSummary').textContent = desc;
   }
 }
 
