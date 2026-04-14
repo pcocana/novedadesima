@@ -386,6 +386,7 @@ async function loadFromSheet() {
       Y: headers.findIndex(h => /a[ñn]o/i.test(h)),
       P: headers.findIndex(h => /portada|url.?imagen|url/i.test(h)),
       R: headers.findIndex(h => /resumen/i.test(h)),
+      O: headers.findIndex(h => /observ/i.test(h)),
     };
     const loaded = [];
     for (let i = 1; i < lines.length; i++) {
@@ -398,6 +399,7 @@ async function loadFromSheet() {
         Año:       parseInt(c[ix.Y]) || null,
         Portada:   ix.P >= 0 ? (c[ix.P] || '').trim() : '',
         Resumen:   ix.R >= 0 ? (c[ix.R] || '').trim() : '',
+        Obs:       ix.O >= 0 ? (c[ix.O] || '').trim() : '',
       };
       if (b.Titulo) loaded.push(b);
     }
@@ -504,7 +506,8 @@ function openModal(book) {
     <span class="pill"><strong>Año:</strong> ${book.Año || '—'}</span>
     <span class="pill"><strong>Editorial:</strong> ${esc(book.Editorial)}</span>
     ${hasISBN ? `<span class="pill"><strong>ISBN:</strong> ${book.ISBN}</span>` : ''}
-    ${mShopUrl ? `<a href="${mShopUrl}" target="_blank" rel="noopener" class="pill" style="color:var(--gold);text-decoration:none;border-color:rgba(160,115,42,.4)">🛒 Ver en Amazon</a>` : ''}`;
+    ${mShopUrl ? `<a href="${mShopUrl}" target="_blank" rel="noopener" class="pill" style="color:var(--gold);text-decoration:none;border-color:rgba(160,115,42,.4)">🛒 Ver en Amazon</a>` : ''}
+    ${book.Obs ? `<span class="pill" style="background:var(--gold);color:#fff;border-color:var(--gold);font-weight:500">📋 ${esc(book.Obs)}</span>` : ''}`;
   document.getElementById('mResumen').innerHTML = book.Resumen
     ? `<p class="resumen-text">${esc(book.Resumen)}</p>`
     : `<p class="resumen-empty">Sin resumen disponible. Podés agregar uno en la planilla.</p>`;
