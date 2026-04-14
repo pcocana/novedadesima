@@ -466,8 +466,8 @@ function renderGrid() {
     card.style.animationDelay = (i * 28) + 'ms';
     card.onclick = () => openModal(book);
     const hasISBN_ = book.ISBN && book.ISBN !== 'Sin ISBN';
-    const coverUrl_ = hasISBN_ ? amazonCover(book.ISBN) : null;
-    const shopUrl_  = hasISBN_ ? amazonLink(book.ISBN)  : null;
+    const coverUrl_ = (book.Portada && book.Portada.startsWith('http')) ? book.Portada : (hasISBN_ ? amazonCover(book.ISBN) : null);
+    const shopUrl_  = hasISBN_ ? amazonLink(book.ISBN) : null;
     card.innerHTML = `
       <div class="card-cover">
         ${coverUrl_
@@ -491,8 +491,8 @@ function renderGrid() {
 // ── MODAL ─────────────────────────────────────────────────────
 function openModal(book) {
   const hasISBN = book.ISBN && book.ISBN !== 'Sin ISBN';
-  const mCoverUrl = hasISBN ? amazonCover(book.ISBN) : null;
-  const mShopUrl  = hasISBN ? amazonLink(book.ISBN)  : null;
+  const mCoverUrl = (book.Portada && book.Portada.startsWith('http')) ? book.Portada : (hasISBN ? amazonCover(book.ISBN) : null);
+  const mShopUrl  = hasISBN ? amazonLink(book.ISBN) : null;
   document.getElementById('mCover').innerHTML = mCoverUrl
     ? `<a href="${mShopUrl}" target="_blank" rel="noopener" title="Ver en Amazon" style="display:block">
          <img src="${mCoverUrl}" alt="Portada" onerror="this.parentElement.outerHTML='<div class=no-cover style=padding:2rem><span>📖</span></div>'">
