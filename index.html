@@ -253,7 +253,7 @@
   <div class="hero-inner">
     <span class="hero-chip">✦ Nuevas adquisiciones</span>
     <h1>Catálogo de Novedades</h1>
-    <p>Explorá las últimas incorporaciones en la biblioteca de matemática.</p>
+    <p>Explorá las últimas incorporaciones al acervo de la biblioteca.</p>
     <div class="hero-stats">
       <div class="stat"><strong id="totalCount">0</strong>Títulos</div>
             <div class="stat"><strong id="withCover">0</strong>Con portada</div>
@@ -271,6 +271,9 @@
   </select>
   <select class="filter-select" id="yearFilter" onchange="renderGrid()">
     <option value="">Todos los años</option>
+  </select>
+  <select class="filter-select" id="semFilter" onchange="renderGrid()">
+    <option value="">Todos los semestres</option>
   </select>
   <select class="filter-select" id="coverFilter" onchange="renderGrid()">
     <option value="">Todos</option>
@@ -389,6 +392,7 @@ async function loadFromSheet() {
       R: headers.findIndex(h => /resumen/i.test(h)),
       O: headers.findIndex(h => /observ/i.test(h)),
       L: headers.findIndex(h => /enlace|link/i.test(h)),
+      S: headers.findIndex(h => /semestre/i.test(h)),
     };
     const loaded = [];
     for (let i = 1; i < lines.length; i++) {
@@ -403,6 +407,7 @@ async function loadFromSheet() {
         Resumen:   ix.R >= 0 ? (c[ix.R] || '').trim() : '',
         Obs:       ix.O >= 0 ? (c[ix.O] || '').trim() : '',
         Enlace:    ix.L >= 0 ? (c[ix.L] || '').trim() : '',
+        Semestre:  ix.S >= 0 ? (c[ix.S] || '').trim() : '',
       };
       if (b.Titulo) loaded.push(b);
     }
@@ -431,14 +436,21 @@ function updateStats() {
 function populateFilters() {
   const eS = document.getElementById('editFilter');
   const yS = document.getElementById('yearFilter');
+  const sS = document.getElementById('semFilter');
   while (eS.options.length > 1) eS.remove(1);
   while (yS.options.length > 1) yS.remove(1);
+  if (sS) while (sS.options.length > 1) sS.remove(1);
   [...new Set(books.map(b => b.Editorial?.trim()).filter(Boolean))].sort().forEach(e => {
     const o = document.createElement('option'); o.value = e; o.textContent = e; eS.appendChild(o);
   });
   [...new Set(books.map(b => b.Año).filter(Boolean))].sort((a,b) => b-a).forEach(y => {
     const o = document.createElement('option'); o.value = y; o.textContent = y; yS.appendChild(o);
   });
+  if (sS) {
+    [...new Set(books.map(b => b.Semestre).filter(Boolean))].sort().reverse().forEach(s => {
+      const o = document.createElement('option'); o.value = s; o.textContent = s; sS.appendChild(o);
+    });
+  }
 }
 
 // ── GRID ──────────────────────────────────────────────────────
@@ -446,6 +458,7 @@ function renderGrid() {
   const q  = document.getElementById('searchInput').value.toLowerCase();
   const eF = document.getElementById('editFilter').value;
   const yF = document.getElementById('yearFilter').value;
+  const sF = document.getElementById('semFilter')?.value || '';
   const cF = document.getElementById('coverFilter').value;
 
   const filtered = books.filter(b => {
@@ -508,6 +521,7 @@ function openModal(book) {
   document.getElementById('mAuthor').textContent = book.Autor;
   document.getElementById('mPills').innerHTML = `
     <span class="pill"><strong>Año:</strong> ${book.Año || '—'}</span>
+    ${book.Semestre ? `<span class="pill"><strong>Semestre:</strong> ${esc(book.Semestre)}</span>` : ''}
     <span class="pill"><strong>Editorial:</strong> ${esc(book.Editorial)}</span>
     ${hasISBN ? `<span class="pill"><strong>ISBN:</strong> ${book.ISBN}</span>` : ''}
     ${mShopUrl ? `<a href="${mShopUrl}" target="_blank" rel="noopener" class="pill" style="color:var(--gold);text-decoration:none;border-color:rgba(160,115,42,.4)">${book.Enlace ? '📖 Ver en catálogo' : '🛒 Ver en Amazon'}</a>` : ''}
