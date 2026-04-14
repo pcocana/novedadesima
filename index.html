@@ -422,7 +422,6 @@ function init() {
 function updateStats() {
   const years = books.map(b => b.Año).filter(Boolean);
   document.getElementById('totalCount').textContent = books.length;
-  document.getElementById('yearRange').textContent  = years.length ? Math.min(...years) + '–' + Math.max(...years) : '—';
   document.getElementById('withCover').textContent  = books.filter(b => b.ISBN && b.ISBN !== 'Sin ISBN').length;
 }
 
