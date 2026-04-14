@@ -374,7 +374,7 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSWctXMgY
 async function loadFromSheet() {
   const banner = document.getElementById('loadBanner');
   try {
-    banner.style.display = 'flex';
+    if (banner) banner.style.display = 'flex';
     const res = await fetch(SHEET_CSV_URL);
     if (!res.ok) throw new Error('Error al cargar');
     const text = await res.text();
@@ -411,7 +411,7 @@ async function loadFromSheet() {
   } catch(e) {
     console.warn('Usando datos locales:', e.message);
   } finally {
-    banner.style.display = 'none';
+    if (banner) banner.style.display = 'none';
     updateStats(); populateFilters(); renderGrid();
   }
 }
@@ -587,7 +587,7 @@ function esc(s) {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(null, true); });
-init();
+document.addEventListener('DOMContentLoaded', init);
 </script>
 <!-- Banner de carga -->
 <div id="loadBanner" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--forest);color:#F4EFE6;padding:.6rem 1.4rem;border-radius:30px;font-size:.8rem;align-items:center;gap:.6rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);">
