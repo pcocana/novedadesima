@@ -387,7 +387,7 @@ async function loadFromSheet() {
       A: headers.findIndex(h => /autor/i.test(h)),
       E: headers.findIndex(h => /editorial/i.test(h)),
       Y: headers.findIndex(h => /a[ñn]o/i.test(h)),
-      P: headers.findIndex(h => /portada|url/i.test(h)),
+      P: headers.findIndex(h => /portada|url.?imagen|url/i.test(h)),
       R: headers.findIndex(h => /resumen/i.test(h)),
     };
     const loaded = [];
@@ -534,7 +534,7 @@ function importCSV(event) {
       A: headers.findIndex(h => /autor/i.test(h)),
       E: headers.findIndex(h => /editorial/i.test(h)),
       Y: headers.findIndex(h => /a[ñn]o/i.test(h)),
-      P: headers.findIndex(h => /portada/i.test(h)),
+      P: headers.findIndex(h => /portada|url.?imagen|url/i.test(h)),
       R: headers.findIndex(h => /resumen/i.test(h)),
     };
 
