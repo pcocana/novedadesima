@@ -4,592 +4,545 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Novedades Bibliográficas</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F5EFE4;
-    --card: #FDFAF5;
-    --primary: #1E3A2F;
-    --accent: #B07D3A;
-    --accent2: #8B5E3C;
-    --text: #1C1C1C;
-    --muted: #6B6460;
-    --border: #DDD5C8;
-    --shadow: 0 4px 24px rgba(30,58,47,0.10);
-    --shadow-hover: 0 12px 40px rgba(30,58,47,0.18);
+    --bg:       #F4EFE6;
+    --card:     #FDFAF5;
+    --ink:      #1A1A1A;
+    --forest:   #1E3A2F;
+    --gold:     #A0732A;
+    --muted:    #7A6E65;
+    --border:   #DDD5C4;
+    --shadow:   0 2px 20px rgba(30,58,47,.08);
+    --hover:    0 8px 40px rgba(30,58,47,.16);
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Outfit', sans-serif; min-height: 100vh; }
 
   /* ── HEADER ── */
   header {
-    background: var(--primary);
-    color: #F5EFE4;
-    padding: 0 2rem;
+    background: var(--forest);
+    padding: 0 2.5rem;
     position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 16px rgba(0,0,0,.25);
+    box-shadow: 0 2px 24px rgba(0,0,0,.2);
   }
   .header-inner {
-    max-width: 1280px; margin: 0 auto;
+    max-width: 1300px; margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between;
-    height: 68px;
+    height: 64px;
   }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-icon {
-    width: 36px; height: 36px; background: var(--accent);
-    border-radius: 6px; display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-icon {
+    width: 38px; height: 38px; background: var(--gold);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 19px; flex-shrink: 0;
   }
-  .logo-text { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; letter-spacing: .3px; }
-  .logo-sub { font-size: .7rem; font-weight: 300; opacity: .7; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 1px; }
-  .header-actions { display: flex; align-items: center; gap: 1rem; }
-  .btn-import {
-    background: transparent; border: 1px solid rgba(245,239,228,.3);
-    color: #F5EFE4; padding: .45rem 1rem; border-radius: 6px;
-    font-family: 'DM Sans', sans-serif; font-size: .8rem; cursor: pointer;
-    transition: background .2s; letter-spacing: .3px;
+  .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: #F4EFE6; font-weight: 600; letter-spacing: .3px; }
+  .brand-sub  { font-size: .65rem; color: rgba(244,239,230,.5); letter-spacing: 2px; text-transform: uppercase; margin-top: 1px; }
+  .btn-csv {
+    background: rgba(244,239,230,.1); border: 1px solid rgba(244,239,230,.25);
+    color: #F4EFE6; padding: .45rem 1.1rem; border-radius: 6px;
+    font-family: 'Outfit', sans-serif; font-size: .8rem; cursor: pointer;
+    transition: background .2s; display: flex; align-items: center; gap: 6px;
   }
-  .btn-import:hover { background: rgba(255,255,255,.1); }
+  .btn-csv:hover { background: rgba(244,239,230,.18); }
 
   /* ── HERO ── */
   .hero {
-    background: var(--primary);
-    padding: 3rem 2rem 4rem;
+    background: var(--forest);
+    padding: 2.5rem 2.5rem 3.5rem;
     position: relative; overflow: hidden;
   }
-  .hero::after {
+  .hero::before {
     content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    position: absolute; right: -80px; top: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(160,115,42,.18) 0%, transparent 70%);
+    pointer-events: none;
   }
-  .hero-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
-  .hero-tag {
-    display: inline-block; background: var(--accent); color: #fff;
-    font-size: .7rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-    padding: .3rem .8rem; border-radius: 4px; margin-bottom: 1rem;
+  .hero-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-chip {
+    display: inline-block; background: var(--gold); color: #fff;
+    font-size: .65rem; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase;
+    padding: .28rem .8rem; border-radius: 3px; margin-bottom: .9rem;
   }
   .hero h1 {
-    font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3rem);
-    color: #F5EFE4; font-weight: 700; line-height: 1.2;
-    max-width: 600px; margin-bottom: .75rem;
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #F4EFE6; font-weight: 600; line-height: 1.15; max-width: 560px;
+    margin-bottom: .7rem;
   }
-  .hero p { color: rgba(245,239,228,.65); font-size: .95rem; font-weight: 300; max-width: 480px; line-height: 1.6; }
-  .hero-meta { display: flex; gap: 2rem; margin-top: 1.5rem; }
-  .hero-stat { color: rgba(245,239,228,.55); font-size: .8rem; }
-  .hero-stat strong { color: var(--accent); font-size: 1.4rem; font-family: 'Playfair Display', serif; display: block; }
+  .hero p { color: rgba(244,239,230,.6); font-size: .9rem; font-weight: 300; max-width: 440px; line-height: 1.65; }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 1.8rem; }
+  .stat { color: rgba(244,239,230,.5); font-size: .75rem; font-weight: 300; }
+  .stat strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--gold); font-weight: 600; line-height: 1; }
 
   /* ── TOOLBAR ── */
   .toolbar {
-    max-width: 1280px; margin: 0 auto;
-    padding: 1.5rem 2rem;
+    max-width: 1300px; margin: 0 auto;
+    padding: 1.5rem 2.5rem;
     display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
   }
-  .search-wrap { position: relative; flex: 1; min-width: 220px; }
-  .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .search-wrap { position: relative; flex: 1; min-width: 240px; }
+  .search-wrap svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); }
   #searchInput {
-    width: 100%; padding: .65rem 1rem .65rem 2.5rem;
+    width: 100%; padding: .65rem 1rem .65rem 2.6rem;
     border: 1.5px solid var(--border); border-radius: 8px;
-    background: var(--card); font-family: 'DM Sans', sans-serif; font-size: .9rem;
-    outline: none; transition: border-color .2s;
+    background: var(--card); font-family: 'Outfit', sans-serif; font-size: .875rem;
+    outline: none; color: var(--ink); transition: border-color .2s;
   }
-  #searchInput:focus { border-color: var(--accent); }
+  #searchInput:focus { border-color: var(--gold); }
   .filter-select {
     padding: .65rem 1rem; border: 1.5px solid var(--border); border-radius: 8px;
-    background: var(--card); font-family: 'DM Sans', sans-serif; font-size: .875rem;
-    outline: none; cursor: pointer; color: var(--text); transition: border-color .2s;
+    background: var(--card); font-family: 'Outfit', sans-serif; font-size: .85rem;
+    outline: none; cursor: pointer; color: var(--ink);
   }
-  .filter-select:focus { border-color: var(--accent); }
-  .results-count { font-size: .8rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
+  .filter-select:focus { border-color: var(--gold); }
+  .count { font-size: .78rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
 
   /* ── GRID ── */
-  .grid-wrap { max-width: 1280px; margin: 0 auto; padding: 0 2rem 4rem; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
+  .grid-wrap { max-width: 1300px; margin: 0 auto; padding: 0 2.5rem 5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 1.5rem; }
+
   .card {
-    background: var(--card); border-radius: 12px; overflow: hidden;
+    background: var(--card); border-radius: 10px; overflow: hidden;
     box-shadow: var(--shadow); cursor: pointer;
-    transition: transform .25s, box-shadow .25s;
-    display: flex; flex-direction: column;
-    animation: fadeUp .4s ease both;
+    transition: transform .25s ease, box-shadow .25s ease;
+    animation: rise .4s ease both; display: flex; flex-direction: column;
   }
-  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
-  .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+  @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+  .card:hover { transform: translateY(-5px); box-shadow: var(--hover); }
+
   .card-cover {
-    width: 100%; aspect-ratio: 2/3; background: linear-gradient(135deg, #2D4A3E 0%, #1B3A2D 100%);
+    width: 100%; aspect-ratio: 2/3;
+    background: linear-gradient(150deg, #2D4A3E, #152B22);
     display: flex; align-items: center; justify-content: center; overflow: hidden;
-    position: relative;
   }
   .card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .cover-placeholder {
-    padding: 1rem; text-align: center;
-    font-family: 'Playfair Display', serif; color: rgba(245,239,228,.5);
-    font-size: .75rem; line-height: 1.5; font-style: italic;
+  .no-cover {
+    padding: 1.2rem; text-align: center;
+    font-family: 'Cormorant Garamond', serif; color: rgba(244,239,230,.4);
+    font-size: .8rem; line-height: 1.5; font-style: italic;
   }
-  .cover-placeholder .cover-icon { font-size: 2.5rem; margin-bottom: .5rem; opacity: .4; }
-  .card-body { padding: .9rem 1rem 1rem; flex: 1; display: flex; flex-direction: column; gap: .3rem; }
+  .no-cover span { font-size: 2.8rem; opacity: .3; display: block; margin-bottom: .5rem; }
+
+  .card-body { padding: .9rem 1rem 1rem; flex: 1; display: flex; flex-direction: column; }
   .card-title {
-    font-family: 'Playfair Display', serif; font-size: .875rem;
-    font-weight: 500; line-height: 1.35; color: var(--text);
+    font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600;
+    line-height: 1.3; color: var(--ink);
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .card-author { font-size: .75rem; color: var(--muted); margin-top: .15rem; }
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: auto; padding-top: .6rem;
-  }
-  .card-year {
-    background: var(--primary); color: var(--accent); font-size: .7rem;
-    font-weight: 500; padding: .2rem .55rem; border-radius: 4px; letter-spacing: .5px;
-  }
-  .card-editorial { font-size: .68rem; color: var(--muted); text-align: right; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card-author { font-size: .72rem; color: var(--muted); margin-top: .3rem; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: .65rem; }
+  .card-year { background: var(--forest); color: var(--gold); font-size: .68rem; font-weight: 500; padding: .2rem .55rem; border-radius: 3px; }
+  .card-ed { font-size: .65rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 95px; }
 
   /* ── MODAL ── */
   .overlay {
     position: fixed; inset: 0; z-index: 1000;
-    background: rgba(10,20,15,.7); backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity .3s;
+    background: rgba(8,16,12,.75); backdrop-filter: blur(5px);
+    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
   }
-  .overlay.active { opacity: 1; pointer-events: all; }
+  .overlay.open { opacity: 1; pointer-events: all; }
   .modal {
-    background: var(--card); border-radius: 16px; max-width: 820px; width: 100%;
-    max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,.35);
-    transform: scale(.96); transition: transform .3s;
-    scrollbar-width: thin;
+    background: var(--card); border-radius: 14px; max-width: 800px; width: 100%;
+    max-height: 88vh; overflow-y: auto; scrollbar-width: thin;
+    box-shadow: 0 30px 80px rgba(0,0,0,.4);
+    transform: scale(.95); transition: transform .3s; position: relative;
   }
-  .overlay.active .modal { transform: scale(1); }
-  .modal-inner { display: grid; grid-template-columns: 220px 1fr; min-height: 420px; }
-  @media(max-width: 600px) { .modal-inner { grid-template-columns: 1fr; } }
+  .overlay.open .modal { transform: scale(1); }
+  .modal-grid { display: grid; grid-template-columns: 210px 1fr; min-height: 380px; }
+  @media(max-width:580px) { .modal-grid { grid-template-columns: 1fr; } }
+
   .modal-cover {
-    background: linear-gradient(160deg, #1E3A2F 0%, #0D2018 100%);
-    border-radius: 16px 0 0 16px; overflow: hidden; min-height: 300px;
+    background: linear-gradient(160deg, #1E3A2F, #0D2018);
+    border-radius: 14px 0 0 14px; overflow: hidden;
     display: flex; align-items: flex-start;
   }
-  .modal-cover img { width: 100%; object-fit: cover; display: block; height: 100%; }
-  .modal-cover .cover-placeholder { padding: 2rem; }
-  .modal-content { padding: 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1rem; }
-  .modal-close {
-    position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px;
-    background: rgba(0,0,0,.15); border: none; border-radius: 50%;
-    color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  }
-  .modal { position: relative; }
-  .modal-badge {
+  .modal-cover img { width: 100%; object-fit: cover; display: block; }
+  .modal-cover .no-cover { padding: 2rem; align-self: center; }
+
+  .modal-body { padding: 2rem 2.2rem; display: flex; flex-direction: column; gap: .9rem; }
+  .modal-chip {
     display: inline-flex; align-items: center; gap: .4rem;
-    background: rgba(176,125,58,.12); color: var(--accent);
-    font-size: .7rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase;
-    padding: .3rem .7rem; border-radius: 4px; width: fit-content;
+    background: rgba(160,115,42,.12); color: var(--gold);
+    font-size: .65rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: .28rem .7rem; border-radius: 3px; width: fit-content;
   }
-  .modal-title {
-    font-family: 'Playfair Display', serif; font-size: 1.35rem;
-    font-weight: 700; line-height: 1.25; color: var(--text);
-  }
-  .modal-author { font-size: .95rem; color: var(--muted); }
-  .modal-meta {
-    display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .25rem;
-  }
-  .meta-pill {
-    background: var(--bg); border: 1px solid var(--border);
-    font-size: .72rem; padding: .25rem .65rem; border-radius: 20px; color: var(--muted);
-  }
-  .meta-pill strong { color: var(--text); }
-  .summary-box {
-    background: var(--bg); border-left: 3px solid var(--accent);
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; line-height: 1.2; }
+  .modal-author { font-size: .9rem; color: var(--muted); }
+  .modal-pills { display: flex; gap: .45rem; flex-wrap: wrap; }
+  .pill { background: var(--bg); border: 1px solid var(--border); font-size: .7rem; padding: .22rem .65rem; border-radius: 20px; color: var(--muted); }
+  .pill strong { color: var(--ink); }
+
+  .resumen-box {
+    background: var(--bg); border-left: 3px solid var(--gold);
     border-radius: 0 8px 8px 0; padding: 1rem 1.1rem;
-    font-size: .875rem; line-height: 1.7; color: var(--text);
   }
-  .summary-label {
-    font-size: .7rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase;
-    color: var(--accent); margin-bottom: .4rem;
+  .resumen-label { font-size: .65rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: .4rem; }
+  .resumen-text { font-size: .875rem; line-height: 1.72; color: var(--ink); }
+  .resumen-empty { font-size: .85rem; color: var(--muted); font-style: italic; }
+
+  .modal-isbn { font-size: .7rem; color: var(--muted); margin-top: auto; padding-top: .6rem; border-top: 1px solid var(--border); }
+  .modal-close {
+    position: absolute; top: .9rem; right: .9rem;
+    width: 30px; height: 30px; background: rgba(0,0,0,.1); border: none;
+    border-radius: 50%; font-size: .9rem; cursor: pointer; color: var(--ink);
+    display: flex; align-items: center; justify-content: center; z-index: 10;
   }
-  .summary-loading { display: flex; align-items: center; gap: .5rem; color: var(--muted); font-size: .85rem; }
-  .spinner {
-    width: 16px; height: 16px; border: 2px solid var(--border);
-    border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .isbn-tag { font-size: .72rem; color: var(--muted); margin-top: auto; padding-top: .5rem; border-top: 1px solid var(--border); }
 
   /* ── IMPORT PANEL ── */
   .import-panel {
     position: fixed; inset: 0; z-index: 2000;
-    background: rgba(10,20,15,.75); backdrop-filter: blur(4px);
+    background: rgba(8,16,12,.8); backdrop-filter: blur(5px);
     display: flex; align-items: center; justify-content: center; padding: 1.5rem;
     opacity: 0; pointer-events: none; transition: opacity .3s;
   }
-  .import-panel.active { opacity: 1; pointer-events: all; }
+  .import-panel.open { opacity: 1; pointer-events: all; }
   .import-box {
-    background: var(--card); border-radius: 16px; max-width: 560px; width: 100%;
-    padding: 2rem; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    background: var(--card); border-radius: 14px; max-width: 600px; width: 100%;
+    padding: 2.2rem; box-shadow: 0 24px 60px rgba(0,0,0,.3);
   }
-  .import-box h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: .5rem; }
-  .import-box p { font-size: .85rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+  .import-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: .5rem; }
+  .import-box p { font-size: .85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.1rem; }
+  .import-box code { background: var(--bg); padding: .15rem .4rem; border-radius: 3px; font-size: .78rem; color: var(--forest); }
   .import-box textarea {
-    width: 100%; height: 180px; border: 1.5px solid var(--border); border-radius: 8px;
-    padding: .75rem; font-family: monospace; font-size: .78rem; resize: vertical; outline: none;
+    width: 100%; height: 160px; border: 1.5px solid var(--border); border-radius: 8px;
+    padding: .8rem; font-family: monospace; font-size: .78rem; resize: vertical; outline: none;
+    background: var(--bg);
   }
-  .import-box textarea:focus { border-color: var(--accent); }
-  .import-actions { display: flex; gap: .75rem; margin-top: 1rem; justify-content: flex-end; }
+  .import-box textarea:focus { border-color: var(--gold); }
+  .import-actions { display: flex; gap: .75rem; margin-top: 1.1rem; justify-content: flex-end; }
   .btn-primary {
-    background: var(--primary); color: #F5EFE4; border: none;
-    padding: .6rem 1.25rem; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+    background: var(--forest); color: #F4EFE6; border: none;
+    padding: .6rem 1.3rem; border-radius: 7px; font-family: 'Outfit', sans-serif;
     font-size: .875rem; cursor: pointer; transition: opacity .2s;
   }
   .btn-primary:hover { opacity: .85; }
-  .btn-secondary {
-    background: transparent; border: 1.5px solid var(--border); color: var(--text);
-    padding: .6rem 1.25rem; border-radius: 8px; font-family: 'DM Sans', sans-serif;
-    font-size: .875rem; cursor: pointer; transition: border-color .2s;
+  .btn-ghost {
+    background: transparent; border: 1.5px solid var(--border); color: var(--ink);
+    padding: .6rem 1.3rem; border-radius: 7px; font-family: 'Outfit', sans-serif;
+    font-size: .875rem; cursor: pointer;
   }
-  .btn-secondary:hover { border-color: var(--muted); }
-  .no-results { text-align: center; padding: 4rem 2rem; color: var(--muted); font-style: italic; }
+  .no-results { text-align: center; padding: 5rem 2rem; color: var(--muted); font-style: italic; }
+
+  /* FILE input hidden */
+  #fileInput { display: none; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <div class="logo">
-      <div class="logo-icon">📚</div>
+    <div class="brand">
+      <div class="brand-icon">📚</div>
       <div>
-        <div class="logo-text">Biblioteca</div>
-        <div class="logo-sub">Novedades Bibliográficas</div>
+        <div class="brand-name">Biblioteca</div>
+        <div class="brand-sub">Novedades Bibliográficas</div>
       </div>
     </div>
-    <div class="header-actions">
-      <button class="btn-import" onclick="openImport()">⬆ Importar CSV</button>
-    </div>
+    <button class="btn-csv" onclick="document.getElementById('fileInput').click()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Importar CSV
+    </button>
+    <input type="file" id="fileInput" accept=".csv" onchange="importCSV(event)">
   </div>
 </header>
 
 <div class="hero">
   <div class="hero-inner">
-    <span class="hero-tag">✦ Nuevas adquisiciones</span>
+    <span class="hero-chip">✦ Nuevas adquisiciones</span>
     <h1>Catálogo de Novedades</h1>
-    <p>Explora las últimas incorporaciones al acervo de la biblioteca. Portadas y resúmenes generados automáticamente desde ISBN.</p>
-    <div class="hero-meta">
-      <div class="hero-stat"><strong id="totalCount">0</strong>Títulos</div>
-      <div class="hero-stat"><strong id="yearRange">—</strong>Rango años</div>
+    <p>Explorá las últimas incorporaciones al acervo de la biblioteca.</p>
+    <div class="hero-stats">
+      <div class="stat"><strong id="totalCount">0</strong>Títulos</div>
+      <div class="stat"><strong id="yearRange">—</strong>Rango años</div>
+      <div class="stat"><strong id="withCover">0</strong>Con portada</div>
     </div>
   </div>
 </div>
 
 <div class="toolbar">
   <div class="search-wrap">
-    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input type="text" id="searchInput" placeholder="Buscar por título, autor o editorial…" oninput="renderGrid()">
   </div>
-  <select class="filter-select" id="editorialFilter" onchange="renderGrid()">
+  <select class="filter-select" id="editFilter" onchange="renderGrid()">
     <option value="">Todas las editoriales</option>
   </select>
   <select class="filter-select" id="yearFilter" onchange="renderGrid()">
     <option value="">Todos los años</option>
   </select>
-  <span class="results-count" id="resultsCount"></span>
+  <select class="filter-select" id="coverFilter" onchange="renderGrid()">
+    <option value="">Todos</option>
+    <option value="con">Con portada</option>
+    <option value="sin">Sin portada</option>
+  </select>
+  <span class="count" id="countLabel"></span>
 </div>
 
 <div class="grid-wrap">
-  <div class="grid" id="booksGrid"></div>
-  <div class="no-results" id="noResults" style="display:none">No se encontraron libros con esos filtros.</div>
+  <div class="grid" id="grid"></div>
+  <div class="no-results" id="noResults" style="display:none">No se encontraron títulos con esos filtros.</div>
 </div>
 
 <!-- MODAL -->
 <div class="overlay" id="overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal(null, true)">✕</button>
-    <div class="modal-inner">
-      <div class="modal-cover" id="modalCover"></div>
-      <div class="modal-content">
-        <div class="modal-badge">📖 Nueva Adquisición</div>
-        <div class="modal-title" id="modalTitle"></div>
-        <div class="modal-author" id="modalAuthor"></div>
-        <div class="modal-meta" id="modalMeta"></div>
-        <div class="summary-box">
-          <div class="summary-label">Resumen</div>
-          <div id="modalSummary">
-            <div class="summary-loading"><div class="spinner"></div> Generando resumen…</div>
-          </div>
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal(null,true)">✕</button>
+    <div class="modal-grid">
+      <div class="modal-cover" id="mCover"></div>
+      <div class="modal-body">
+        <div class="modal-chip">📖 Nueva Adquisición</div>
+        <div class="modal-title"  id="mTitle"></div>
+        <div class="modal-author" id="mAuthor"></div>
+        <div class="modal-pills" id="mPills"></div>
+        <div class="resumen-box">
+          <div class="resumen-label">Resumen</div>
+          <div id="mResumen"></div>
         </div>
-        <div class="isbn-tag" id="modalIsbn"></div>
+        <div class="modal-isbn" id="mIsbn"></div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- IMPORT PANEL -->
-<div class="import-panel" id="importPanel" onclick="closeImport(event)">
-  <div class="import-box" onclick="event.stopPropagation()">
-    <h3>Importar nuevos libros</h3>
-    <p>
-      Pegá el contenido CSV de tu planilla. El formato debe tener las columnas:<br>
-      <code>Titulo, ISBN, Autor, Editorial, Año</code><br>
-      (primera fila como encabezado). Los nuevos títulos se agregarán al catálogo actual.
-    </p>
-    <textarea id="csvInput" placeholder="Titulo,ISBN,Autor,Editorial,Año
-Cálculo de varias variables,9786075265513,Stewart,Cengage,2018
-..."></textarea>
-    <div class="import-actions">
-      <button class="btn-secondary" onclick="closeImport(null, true)">Cancelar</button>
-      <button class="btn-primary" onclick="importCSV()">Importar</button>
     </div>
   </div>
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────
+// ── DATOS ─────────────────────────────────────────────────────
+// Columnas esperadas en el CSV: Titulo, ISBN, Autor, Editorial, Año, Portada, Resumen
 let books = [
-  {"Titulo":"An Introduction to Measure Theory (Graduate Studies in Mathematics, 126)","ISBN":"9781470466404","Autor":"Terence Tao","Editorial":"AMS","Año":2011},
-  {"Titulo":"Diophantine geometry","ISBN":"9781014519641","Autor":"Lang, S.","Editorial":"Hassell Street Press","Año":1962},
-  {"Titulo":"Precálculo","ISBN":"9786075265469","Autor":"Swokowski","Editorial":"Cengage","Año":2018},
-  {"Titulo":"Introducción al Análisis Funcional","ISBN":"9788429151893","Autor":"Gatica","Editorial":"Reverte","Año":2014},
-  {"Titulo":"Estadística para Administración y Economía","ISBN":"9788483224038","Autor":"Newbold","Editorial":"Pearson","Año":2008},
-  {"Titulo":"La investigación-acción en la escuela","ISBN":"9788471123411","Autor":"Elliot","Editorial":"Morata","Año":2000},
-  {"Titulo":"Estrategias docentes","ISBN":"9786071601223","Autor":"Eggen","Editorial":"FCE","Año":2010},
-  {"Titulo":"La escuela inteligente","ISBN":"9788474325607","Autor":"Perkins","Editorial":"Gedisa","Año":2008},
-  {"Titulo":"Measure Theory. Vol. 1","ISBN":"9783540345145","Autor":"Bogachev, V.","Editorial":"Springer","Año":2007},
-  {"Titulo":"Functions of One Complex Variable I","ISBN":"9781461263135","Autor":"Conway, J.","Editorial":"Springer","Año":1978},
-  {"Titulo":"A Course in Functional Analysis","ISBN":"9781475743838","Autor":"Conway, J.","Editorial":"Springer","Año":2007},
-  {"Titulo":"Integration and Probability","ISBN":"9781461242024","Autor":"Malliavin, P.","Editorial":"Springer","Año":1995},
-  {"Titulo":"The Theory of Sets and Transfinite Arithmetic","ISBN":"Sin ISBN","Autor":"Abian, Alexander","Editorial":"W.B. Saunders Co.","Año":1965},
-  {"Titulo":"Complex Analysis (Undergraduate Texts in Mathematics)","ISBN":"9780387950693","Autor":"Theodore W. Gamelin","Editorial":"Springer","Año":2001},
-  {"Titulo":"Problems in Algebraic Number Theory","ISBN":"9781441919670","Autor":"R. Murty & J. Esmonde","Editorial":"Springer-Verlag","Año":2004},
-  {"Titulo":"Plane Answers to Complex Questions: The Theory of Linear Models","ISBN":"9781461428855","Autor":"Christensen, R.","Editorial":"Springer","Año":2010},
-  {"Titulo":"An Introduction to Homological Algebra","ISBN":"9780387245270","Autor":"J. J. Rotman","Editorial":"Springer","Año":2008},
-  {"Titulo":"Fourier Analysis: An Introduction","ISBN":"9780691113845","Autor":"Stein, Elias M.","Editorial":"Princeton University Press","Año":2003},
-  {"Titulo":"Complex Analysis (Princeton Lectures in Analysis, No. 2)","ISBN":"9780691113852","Autor":"Stein, Elias M.","Editorial":"Princeton University Press","Año":2003},
-  {"Titulo":"Análisis Complejo y Ecuaciones Diferenciales","ISBN":"9788415581000","Autor":"Barreira","Editorial":"Delta","Año":2012},
-  {"Titulo":"Matemáticas","ISBN":"9788499800431","Autor":"Goñi","Editorial":"GRAO","Año":2011},
-  {"Titulo":"Cálculo 1 de una variable, 9a edición","ISBN":"9786071502735","Autor":"Edwards, B. & Larson, R.","Editorial":"McGraw Hill","Año":2010},
-  {"Titulo":"Cálculo de una variable","ISBN":"9786075265506","Autor":"Stewart","Editorial":"Cengage","Año":2018},
-  {"Titulo":"The Theory of Groups","ISBN":"9780486816906","Autor":"Hall, Marshall","Editorial":"Dover Publications","Año":2018},
-  {"Titulo":"Estadística Aplicada Básica","ISBN":"9788495348043","Autor":"Moore","Editorial":"Antoni Bosch","Año":2005},
-  {"Titulo":"Dynamics in One Complex Variable","ISBN":"9780691124889","Autor":"Milnor, J.","Editorial":"Princeton University Press","Año":2006},
-  {"Titulo":"Numerical Linear Algebra","ISBN":"9781489997418","Autor":"G. Allaire & S.M. Kaber","Editorial":"Springer","Año":2008},
-  {"Titulo":"From Rings and Modules to Hopf Algebras","ISBN":"9783031500619","Autor":"Broue, M.","Editorial":"Springer","Año":2024}
+  {Titulo:"An Introduction to Measure Theory",ISBN:"9781470466404",Autor:"Terence Tao",Editorial:"AMS",Año:2011,Resumen:"Introducción rigurosa a la teoría de la medida escrita por el Premio Fields Terence Tao. Cubre la integración de Lebesgue, los espacios L^p y los principales teoremas de convergencia con un enfoque pedagógico excepcional. Texto de referencia en cursos de análisis matemático avanzado a nivel de posgrado."},
+  {Titulo:"Diophantine Geometry",ISBN:"9781014519641",Autor:"Lang, S.",Editorial:"Hassell Street Press",Año:1962,Resumen:"Obra clásica de Serge Lang que establece los fundamentos de la geometría diofántica moderna. Estudia las soluciones enteras y racionales de ecuaciones polinomiales mediante herramientas de geometría algebraica y teoría de números. Referencia fundamental para investigadores en teoría de números algebraica."},
+  {Titulo:"Precálculo",ISBN:"9786075265469",Autor:"Swokowski",Editorial:"Cengage",Año:2018,Resumen:"Texto introductorio que prepara al estudiante para el cálculo diferencial e integral. Abarca funciones, trigonometría, álgebra y geometría analítica con numerosos ejemplos y ejercicios resueltos. Ampliamente utilizado en cursos de nivelación matemática universitaria."},
+  {Titulo:"Introducción al Análisis Funcional",ISBN:"9788429151893",Autor:"Gatica",Editorial:"Reverte",Año:2014,Resumen:"Texto en español que introduce los conceptos fundamentales del análisis funcional, incluyendo espacios de Banach, espacios de Hilbert y operadores lineales acotados. Combina rigor matemático con claridad expositiva, ideal para estudiantes de matemáticas y física matemática de posgrado."},
+  {Titulo:"Estadística para Administración y Economía",ISBN:"9788483224038",Autor:"Newbold",Editorial:"Pearson",Año:2008,Resumen:"Manual de estadística orientado a estudiantes de ciencias económicas y empresariales. Cubre estadística descriptiva, probabilidad, inferencia y regresión con aplicaciones prácticas al mundo de los negocios. Reconocido por su enfoque aplicado y abundancia de casos reales."},
+  {Titulo:"La investigación-acción en la escuela",ISBN:"9788471123411",Autor:"Elliot",Editorial:"Morata",Año:2000,Resumen:"John Elliott presenta la investigación-acción como metodología para la mejora de la práctica docente. El libro fundamenta cómo los profesores pueden convertirse en investigadores de su propia aula. Referencia clásica en la formación docente y la educación reflexiva."},
+  {Titulo:"Estrategias docentes",ISBN:"9786071601223",Autor:"Eggen",Editorial:"FCE",Año:2010,Resumen:"Obra dedicada al estudio de las estrategias de enseñanza y su impacto en el aprendizaje escolar. Analiza metodologías activas, el aprendizaje cooperativo y el pensamiento crítico en el aula. Muy utilizado en programas de formación inicial y continua del profesorado."},
+  {Titulo:"La escuela inteligente",ISBN:"9788474325607",Autor:"Perkins",Editorial:"Gedisa",Año:2008,Resumen:"David Perkins propone un modelo de escuela centrado en el desarrollo del pensamiento y la comprensión profunda. Critica la memorización mecánica y defiende una educación que enseñe a pensar con y sobre el conocimiento. Influyente en las corrientes de enseñanza para la comprensión."},
+  {Titulo:"Measure Theory. Vol. 1",ISBN:"9783540345145",Autor:"Bogachev, V.",Editorial:"Springer",Año:2007,Resumen:"Tratado enciclopédico sobre teoría de la medida escrito por Vladimir Bogachev. Cubre las bases de la medida de Lebesgue, medidas abstractas y teoremas de convergencia con exhaustividad excepcional. Referencia indispensable para investigadores en análisis matemático y probabilidad."},
+  {Titulo:"Functions of One Complex Variable I",ISBN:"9781461263135",Autor:"Conway, J.",Editorial:"Springer",Año:1978,Resumen:"Texto clásico de análisis complejo de una variable, reconocido por su rigor y claridad. Cubre funciones analíticas, el teorema de Cauchy y series de Laurent. Ampliamente utilizado en cursos de posgrado de matemáticas en todo el mundo."},
+  {Titulo:"A Course in Functional Analysis",ISBN:"9781475743838",Autor:"Conway, J.",Editorial:"Springer",Año:2007,Resumen:"Curso completo de análisis funcional que cubre espacios de Hilbert y Banach, teoría espectral y el teorema de Hahn-Banach. Escrito por John B. Conway con un estilo claro y motivado por ejemplos concretos. Uno de los textos de posgrado más utilizados en esta área."},
+  {Titulo:"Integration and Probability",ISBN:"9781461242024",Autor:"Malliavin, P.",Editorial:"Springer",Año:1995,Resumen:"Paul Malliavin presenta la teoría de la integración y sus conexiones profundas con la probabilidad moderna. Abarca integración de Lebesgue, espacios L^p y cálculo de Malliavin. Referencia para matemáticos interesados en el análisis estocástico."},
+  {Titulo:"The Theory of Sets and Transfinite Arithmetic",ISBN:"Sin ISBN",Autor:"Abian, Alexander",Editorial:"W.B. Saunders Co.",Año:1965,Resumen:"Obra de Alexander Abian que desarrolla la teoría de conjuntos y la aritmética transfinita desde los axiomas de Zermelo-Fraenkel. Introduce los números ordinales y cardinales con notable claridad y rigor. Texto de valor histórico para quienes estudian los fundamentos de las matemáticas."},
+  {Titulo:"Complex Analysis (Undergraduate Texts in Mathematics)",ISBN:"9780387950693",Autor:"Theodore W. Gamelin",Editorial:"Springer",Año:2001,Resumen:"Introducción accesible al análisis complejo dirigida a estudiantes de pregrado avanzado. Cubre funciones analíticas, integración compleja, series de Laurent y teoría de residuos con abundantes ejemplos. Destaca por equilibrar rigor matemático con claridad pedagógica."},
+  {Titulo:"Problems in Algebraic Number Theory",ISBN:"9781441919670",Autor:"R. Murty & J. Esmonde",Editorial:"Springer-Verlag",Año:2004,Resumen:"Colección de problemas que cubre los temas centrales de la teoría algebraica de números, incluyendo cuerpos de números, anillos de enteros y reciprocidad cuadrática. Diseñado para desarrollar habilidades de demostración en estudiantes de posgrado. Excelente complemento a textos teóricos del área."},
+  {Titulo:"Plane Answers to Complex Questions: The Theory of Linear Models",ISBN:"9781461428855",Autor:"Christensen, R.",Editorial:"Springer",Año:2010,Resumen:"Texto avanzado sobre modelos lineales estadísticos que utiliza la geometría del espacio vectorial como hilo conductor. Cubre regresión, análisis de varianza y modelos mixtos con gran profundidad teórica. Recomendado para estadísticos que buscan una comprensión rigurosa de los modelos lineales."},
+  {Titulo:"An Introduction to Homological Algebra",ISBN:"9780387245270",Autor:"J. J. Rotman",Editorial:"Springer",Año:2008,Resumen:"Introducción moderna y completa al álgebra homológica, cubriendo funtores derivados, sucesiones espectrales y cohomología de grupos. Joseph Rotman es reconocido por su estilo accesible y motivaciones geométricas. Texto estándar para posgrado en álgebra moderna."},
+  {Titulo:"Fourier Analysis: An Introduction",ISBN:"9780691113845",Autor:"Stein, Elias M.",Editorial:"Princeton University Press",Año:2003,Resumen:"Primer volumen de las célebres Princeton Lectures in Analysis de Elias Stein y Rami Shakarchi. Desarrolla la teoría de Fourier desde sus fundamentos hasta sus aplicaciones al análisis real y complejo. Reconocido como uno de los textos de análisis más elegantes del siglo XXI."},
+  {Titulo:"Complex Analysis (Princeton Lectures in Analysis, No. 2)",ISBN:"9780691113852",Autor:"Stein, Elias M.",Editorial:"Princeton University Press",Año:2003,Resumen:"Segundo volumen de las Princeton Lectures in Analysis, dedicado al análisis complejo. Cubre funciones holomorfas, el teorema de Cauchy, la teoría de Riemann y funciones especiales con elegancia. Junto al primer volumen, forma uno de los mejores cursos de análisis disponibles."},
+  {Titulo:"Análisis Complejo y Ecuaciones Diferenciales",ISBN:"9788415581000",Autor:"Barreira",Editorial:"Delta",Año:2012,Resumen:"Texto en español que combina el análisis de funciones de variable compleja con la teoría de ecuaciones diferenciales. Integra herramientas del análisis complejo en el estudio de soluciones de EDO en el plano complejo. Dirigido a estudiantes de matemáticas y física de nivel avanzado."},
+  {Titulo:"Matemáticas",ISBN:"9788499800431",Autor:"Goñi",Editorial:"GRAO",Año:2011,Resumen:"Obra orientada a la didáctica de las matemáticas en educación secundaria y bachillerato. Aborda la enseñanza de conceptos matemáticos con énfasis en la comprensión y resolución de problemas. Útil para docentes en formación y profesores que buscan enriquecer su práctica pedagógica."},
+  {Titulo:"Cálculo 1 de una variable, 9a edición",ISBN:"9786071502735",Autor:"Edwards, B. & Larson, R.",Editorial:"McGraw Hill",Año:2010,Resumen:"Texto clásico de cálculo diferencial e integral ampliamente adoptado en universidades latinoamericanas. Cubre límites, derivadas, integrales y sus aplicaciones con rigor y claridad expositiva. La novena edición incluye recursos digitales y una gran variedad de problemas de práctica."},
+  {Titulo:"Cálculo de una variable",ISBN:"9786075265506",Autor:"Stewart",Editorial:"Cengage",Año:2018,Resumen:"Una de las obras de cálculo más utilizadas en el mundo hispanohablante, conocida por su claridad y calidad de ejercicios. Cubre cálculo diferencial e integral con énfasis en la intuición geométrica y las aplicaciones. Incluye acceso a plataformas digitales interactivas."},
+  {Titulo:"The Theory of Groups",ISBN:"9780486816906",Autor:"Hall, Marshall",Editorial:"Dover Publications",Año:2018,Resumen:"Obra clásica de Marshall Hall que ofrece un tratamiento exhaustivo de la teoría de grupos finitos e infinitos. Cubre grupos de permutaciones, teoría de representaciones y extensiones de grupos con notable profundidad. Reeditada por Dover, sigue siendo una referencia fundamental en álgebra abstracta avanzada."},
+  {Titulo:"Estadística Aplicada Básica",ISBN:"9788495348043",Autor:"Moore",Editorial:"Antoni Bosch",Año:2005,Resumen:"Introducción a la estadística aplicada para estudiantes de ciencias sociales, biológicas y de la salud. David Moore presenta los conceptos estadísticos de forma intuitiva con ejemplos del mundo real. Muy apreciado por su capacidad de hacer accesible el pensamiento estadístico."},
+  {Titulo:"Dynamics in One Complex Variable",ISBN:"9780691124889",Autor:"Milnor, J.",Editorial:"Princeton University Press",Año:2006,Resumen:"Introducción a la dinámica holomorfa en una variable compleja, escrita por el Premio Fields John Milnor. Estudia la iteración de funciones racionales, conjuntos de Julia y Mandelbrot y la teoría de los componentes de Fatou. Texto fundamental para matemáticos interesados en sistemas dinámicos y geometría fractal."},
+  {Titulo:"Numerical Linear Algebra",ISBN:"9781489997418",Autor:"G. Allaire & S.M. Kaber",Editorial:"Springer",Año:2008,Resumen:"Texto riguroso sobre álgebra lineal numérica que cubre factorizaciones matriciales, métodos iterativos y valores propios. Combina análisis teórico con implementación computacional. Muy utilizado en cursos de matemáticas aplicadas y computación científica."},
+  {Titulo:"From Rings and Modules to Hopf Algebras",ISBN:"9783031500619",Autor:"Broue, M.",Editorial:"Springer",Año:2024,Resumen:"Texto avanzado de álgebra que recorre el camino desde los anillos y módulos hasta las álgebras de Hopf, con aplicaciones en física matemática y topología cuántica. Michel Broué presenta una perspectiva unificada de estos conceptos del álgebra moderna. Orientado a estudiantes de doctorado y matemáticos en formación."}
 ];
 
-// Cache (legacy - ahora usa bookCache del servidor)
+// ── ISBN & AMAZON ────────────────────────────────────────────
+// Convierte ISBN-13 a ISBN-10 (igual que hace KOHA)
+function isbn13to10(isbn13) {
+  isbn13 = (isbn13 || '').replace(/[^0-9]/g, '');
+  if (isbn13.length !== 13 || !isbn13.startsWith('978')) return null;
+  const core = isbn13.slice(3, 12);
+  let total = 0;
+  for (let i = 0; i < 9; i++) total += (10 - i) * parseInt(core[i]);
+  const check = (11 - (total % 11)) % 11;
+  return core + (check === 10 ? 'X' : String(check));
+}
 
-// ── INIT ──────────────────────────────────────────────────────────────
+// URL de portada de Amazon a partir del ISBN-13 (mismo método que KOHA)
+function amazonCover(isbn13) {
+  const isbn10 = isbn13to10(isbn13);
+  if (!isbn10) return null;
+  return `https://images-na.ssl-images-amazon.com/images/P/${isbn10}.01.LZZZZZZZ.jpg`;
+}
+
+// URL de página de Amazon
+function amazonLink(isbn13) {
+  const isbn10 = isbn13to10(isbn13);
+  if (!isbn10) return null;
+  return `https://www.amazon.com/dp/${isbn10}`;
+}
+
 function init() {
-  // Stats
-  document.getElementById('totalCount').textContent = books.length;
-  const years = books.map(b => b.Año).filter(Boolean);
-  document.getElementById('yearRange').textContent = Math.min(...years) + '–' + Math.max(...years);
-
-  // Populate filters
-  const editorials = [...new Set(books.map(b => b.Editorial.trim()))].sort();
-  const yearSel = document.getElementById('yearFilter');
-  const editSel = document.getElementById('editorialFilter');
-  editorials.forEach(e => {
-    const o = document.createElement('option'); o.value = e; o.textContent = e; editSel.appendChild(o);
-  });
-  const sortedYears = [...new Set(years)].sort((a,b) => b-a);
-  sortedYears.forEach(y => {
-    const o = document.createElement('option'); o.value = y; o.textContent = y; yearSel.appendChild(o);
-  });
-
+  updateStats();
+  populateFilters();
   renderGrid();
 }
 
-// ── GRID ──────────────────────────────────────────────────────────────
+function updateStats() {
+  const years = books.map(b => b.Año).filter(Boolean);
+  document.getElementById('totalCount').textContent = books.length;
+  document.getElementById('yearRange').textContent  = years.length ? Math.min(...years) + '–' + Math.max(...years) : '—';
+  document.getElementById('withCover').textContent  = books.filter(b => b.ISBN && b.ISBN !== 'Sin ISBN').length;
+}
+
+function populateFilters() {
+  const eS = document.getElementById('editFilter');
+  const yS = document.getElementById('yearFilter');
+  while (eS.options.length > 1) eS.remove(1);
+  while (yS.options.length > 1) yS.remove(1);
+  [...new Set(books.map(b => b.Editorial?.trim()).filter(Boolean))].sort().forEach(e => {
+    const o = document.createElement('option'); o.value = e; o.textContent = e; eS.appendChild(o);
+  });
+  [...new Set(books.map(b => b.Año).filter(Boolean))].sort((a,b) => b-a).forEach(y => {
+    const o = document.createElement('option'); o.value = y; o.textContent = y; yS.appendChild(o);
+  });
+}
+
+// ── GRID ──────────────────────────────────────────────────────
 function renderGrid() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const eFilter = document.getElementById('editorialFilter').value;
-  const yFilter = document.getElementById('yearFilter').value;
+  const q  = document.getElementById('searchInput').value.toLowerCase();
+  const eF = document.getElementById('editFilter').value;
+  const yF = document.getElementById('yearFilter').value;
+  const cF = document.getElementById('coverFilter').value;
 
   const filtered = books.filter(b => {
-    const matchQ = !q || [b.Titulo, b.Autor, b.Editorial].some(f => f.toLowerCase().includes(q));
-    const matchE = !eFilter || b.Editorial.trim() === eFilter;
-    const matchY = !yFilter || String(b.Año) === yFilter;
-    return matchQ && matchE && matchY;
+    const mQ = !q || [b.Titulo, b.Autor, b.Editorial].some(f => f?.toLowerCase().includes(q));
+    const mE = !eF || b.Editorial?.trim() === eF;
+    const mY = !yF || String(b.Año) === yF;
+    const mC = !cF || (cF === 'con' ? !!b.Portada : !b.Portada);
+    return mQ && mE && mY && mC;
   });
 
-  document.getElementById('resultsCount').textContent = `${filtered.length} título${filtered.length !== 1 ? 's' : ''}`;
+  document.getElementById('countLabel').textContent = `${filtered.length} título${filtered.length !== 1 ? 's' : ''}`;
   document.getElementById('noResults').style.display = filtered.length ? 'none' : 'block';
-  const grid = document.getElementById('booksGrid');
+  const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
   filtered.forEach((book, i) => {
     const card = document.createElement('div');
     card.className = 'card';
-    card.style.animationDelay = (i * 35) + 'ms';
+    card.style.animationDelay = (i * 28) + 'ms';
     card.onclick = () => openModal(book);
-
-    const hasISBN = book.ISBN && book.ISBN !== 'Sin ISBN';
-    const coverUrl = hasISBN ? `https://covers.openlibrary.org/b/isbn/${book.ISBN}-M.jpg` : null;
-
+    const hasISBN_ = book.ISBN && book.ISBN !== 'Sin ISBN';
+    // Portada manual si existe, si no Amazon automático
+    const coverUrl_ = book.Portada ? book.Portada : (hasISBN_ ? amazonCover(book.ISBN) : null);
+    const shopUrl_  = hasISBN_ ? amazonLink(book.ISBN) : null;
     card.innerHTML = `
       <div class="card-cover">
-        ${coverUrl
-          ? `<img src="${coverUrl}" alt="Portada" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="display:block">
-             <div class="cover-placeholder" style="display:none"><div class="cover-icon">📖</div>${escHtml(book.Titulo)}</div>`
-          : `<div class="cover-placeholder"><div class="cover-icon">📖</div>${escHtml(book.Titulo)}</div>`
-        }
+        ${coverUrl_
+          ? `<a href="${shopUrl_}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Ver en Amazon">
+               <img src="${coverUrl_}" alt="Portada" loading="lazy" onerror="this.parentElement.outerHTML='<div class=no-cover><span>📖</span></div>'">
+             </a>`
+          : `<div class="no-cover"><span>📖</span>${esc(book.Titulo)}</div>`}
       </div>
       <div class="card-body">
-        <div class="card-title">${escHtml(book.Titulo)}</div>
-        <div class="card-author">${escHtml(book.Autor)}</div>
+        <div class="card-title">${esc(book.Titulo)}</div>
+        <div class="card-author">${esc(book.Autor)}</div>
         <div class="card-footer">
           <span class="card-year">${book.Año || '—'}</span>
-          <span class="card-editorial">${escHtml(book.Editorial)}</span>
+          <span class="card-ed">${esc(book.Editorial)}</span>
         </div>
       </div>`;
     grid.appendChild(card);
   });
 }
 
-// ── SERVIDOR LOCAL ─────────────────────────────────────────────────────
-const SERVER_URL = 'http://localhost:3000';
-const bookCache = {};
-
-async function fetchFromServer(isbn) {
-  if (bookCache[isbn]) return bookCache[isbn];
-  try {
-    const r = await fetch(`${SERVER_URL}/api/books/${isbn}`);
-    if (!r.ok) return null;
-    const d = await r.json();
-    bookCache[isbn] = d;
-    return d;
-  } catch(e) { return null; }
-}
-
-// ── MODAL ──────────────────────────────────────────────────────────────
-let currentBook = null;
-
-async function openModal(book) {
-  currentBook = book;
-  document.getElementById('overlay').classList.add('active');
-
+// ── MODAL ─────────────────────────────────────────────────────
+function openModal(book) {
   const hasISBN = book.ISBN && book.ISBN !== 'Sin ISBN';
-
-  document.getElementById('modalCover').innerHTML =
-    `<div class="cover-placeholder"><div class="cover-icon">📖</div>${escHtml(book.Titulo)}</div>`;
-  document.getElementById('modalTitle').textContent = book.Titulo;
-  document.getElementById('modalAuthor').textContent = book.Autor;
-  document.getElementById('modalMeta').innerHTML = `
-    <span class="meta-pill"><strong>Año:</strong> ${book.Año || '—'}</span>
-    <span class="meta-pill"><strong>Editorial:</strong> ${escHtml(book.Editorial)}</span>
-    ${hasISBN ? `<span class="meta-pill"><strong>ISBN:</strong> ${book.ISBN}</span>` : ''}
-  `;
-  document.getElementById('modalIsbn').textContent = hasISBN ? `ISBN: ${book.ISBN}` : 'Sin ISBN registrado';
-  document.getElementById('modalSummary').innerHTML = '<div class="summary-loading"><div class="spinner"></div> Consultando servidor…</div>';
-
-  let cover = null, desc = null;
-
-  if (hasISBN) {
-    const data = await fetchFromServer(book.ISBN);
-    if (data) { cover = data.cover || null; desc = data.description || null; }
-  }
-
-  if (currentBook !== book) return;
-
-  if (cover) {
-    document.getElementById('modalCover').innerHTML =
-      `<img src="${cover}" alt="Portada" onerror="this.outerHTML='<div class=cover-placeholder style=padding:2rem><div class=cover-icon>📖</div>${escHtml(book.Titulo)}</div>'">`;
-  }
-
-  if (desc) {
-    document.getElementById('modalSummary').textContent = desc;
-  } else {
-    document.getElementById('modalSummary').innerHTML = '<div class="summary-loading"><div class="spinner"></div> Generando resumen con IA…</div>';
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          messages: [{
-            role: 'user',
-            content: `Genera un resumen académico conciso (3-4 oraciones) en español para este libro:
-Título: ${book.Titulo}
-Autor: ${book.Autor}
-Editorial: ${book.Editorial}
-Año: ${book.Año}
-
-Responde SOLO con el resumen, sin presentaciones ni comillas.`
-          }]
-        })
-      });
-      const d = await response.json();
-      desc = d.content?.[0]?.text || 'No se encontró descripción para este título.';
-    } catch(e) {
-      desc = 'No se encontró descripción para este título.';
-    }
-    if (currentBook === book) document.getElementById('modalSummary').textContent = desc;
-  }
+  // Portada manual si existe, si no Amazon automático
+  const mCoverUrl = book.Portada ? book.Portada : (hasISBN ? amazonCover(book.ISBN) : null);
+  const mShopUrl  = hasISBN ? amazonLink(book.ISBN) : null;
+  document.getElementById('mCover').innerHTML = mCoverUrl
+    ? `<a href="${mShopUrl}" target="_blank" rel="noopener" title="Ver en Amazon" style="display:block">
+         <img src="${mCoverUrl}" alt="Portada" onerror="this.parentElement.outerHTML='<div class=no-cover style=padding:2rem><span>📖</span></div>'">
+       </a>`
+    : `<div class="no-cover" style="padding:2rem;align-self:center"><span>📖</span>${esc(book.Titulo)}</div>`;
+  document.getElementById('mTitle').textContent  = book.Titulo;
+  document.getElementById('mAuthor').textContent = book.Autor;
+  document.getElementById('mPills').innerHTML = `
+    <span class="pill"><strong>Año:</strong> ${book.Año || '—'}</span>
+    <span class="pill"><strong>Editorial:</strong> ${esc(book.Editorial)}</span>
+    ${hasISBN ? `<span class="pill"><strong>ISBN:</strong> ${book.ISBN}</span>` : ''}
+    ${mShopUrl ? `<a href="${mShopUrl}" target="_blank" rel="noopener" class="pill" style="color:var(--gold);text-decoration:none;border-color:rgba(160,115,42,.4)">🛒 Ver en Amazon</a>` : ''}`;
+  document.getElementById('mResumen').innerHTML = book.Resumen
+    ? `<p class="resumen-text">${esc(book.Resumen)}</p>`
+    : `<p class="resumen-empty">Sin resumen disponible. Podés agregar uno en la planilla.</p>`;
+  document.getElementById('mIsbn').textContent = hasISBN ? `ISBN: ${book.ISBN}` : 'Sin ISBN registrado';
+  document.getElementById('overlay').classList.add('open');
 }
 
 function closeModal(event, force = false) {
-  if (force || event?.target === document.getElementById('overlay')) {
-    document.getElementById('overlay').classList.remove('active');
-    currentBook = null;
-  }
+  if (force || event?.target === document.getElementById('overlay'))
+    document.getElementById('overlay').classList.remove('open');
 }
 
-// ── IMPORT CSV ──────────────────────────────────────────────────────────
-function openImport() { document.getElementById('importPanel').classList.add('active'); }
-function closeImport(event, force = false) {
-  if (force || event?.target === document.getElementById('importPanel')) {
-    document.getElementById('importPanel').classList.remove('active');
-  }
-}
+// ── IMPORTAR CSV ──────────────────────────────────────────────
+function importCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const text = e.target.result;
+    const lines = text.split('\n').filter(l => l.trim());
+    if (lines.length < 2) { alert('El CSV está vacío o tiene formato incorrecto.'); return; }
 
-function importCSV() {
-  const raw = document.getElementById('csvInput').value.trim();
-  if (!raw) return;
-  const lines = raw.split('\n');
-  const headers = lines[0].split(',').map(h => h.trim());
-  const idx = { T: headers.findIndex(h => /titulo/i.test(h)), I: headers.findIndex(h => /isbn/i.test(h)),
-    A: headers.findIndex(h => /autor/i.test(h)), E: headers.findIndex(h => /editorial/i.test(h)),
-    Y: headers.findIndex(h => /a[ñn]o/i.test(h)) };
-
-  let added = 0;
-  for (let i = 1; i < lines.length; i++) {
-    const cols = lines[i].split(',');
-    if (cols.length < 2) continue;
-    const newBook = {
-      Titulo: (cols[idx.T] || '').trim(),
-      ISBN: (cols[idx.I] || 'Sin ISBN').trim(),
-      Autor: (cols[idx.A] || '').trim(),
-      Editorial: (cols[idx.E] || '').trim(),
-      Año: parseInt(cols[idx.Y]) || null
+    const headers = parseCSVLine(lines[0]).map(h => h.trim());
+    const idx = {
+      T: headers.findIndex(h => /titulo/i.test(h)),
+      I: headers.findIndex(h => /isbn/i.test(h)),
+      A: headers.findIndex(h => /autor/i.test(h)),
+      E: headers.findIndex(h => /editorial/i.test(h)),
+      Y: headers.findIndex(h => /a[ñn]o/i.test(h)),
+      P: headers.findIndex(h => /portada/i.test(h)),
+      R: headers.findIndex(h => /resumen/i.test(h)),
     };
-    if (!newBook.Titulo) continue;
-    const dup = books.some(b => b.ISBN === newBook.ISBN && newBook.ISBN !== 'Sin ISBN');
-    if (!dup) { books.push(newBook); added++; }
-  }
 
-  document.getElementById('csvInput').value = '';
-  closeImport(null, true);
-  document.getElementById('totalCount').textContent = books.length;
-  const years = books.map(b => b.Año).filter(Boolean);
-  document.getElementById('yearRange').textContent = Math.min(...years) + '–' + Math.max(...years);
+    let added = 0, updated = 0;
+    for (let i = 1; i < lines.length; i++) {
+      const c = parseCSVLine(lines[i]);
+      const nb = {
+        Titulo:    (c[idx.T] || '').trim(),
+        ISBN:      (c[idx.I] || 'Sin ISBN').trim(),
+        Autor:     (c[idx.A] || '').trim(),
+        Editorial: (c[idx.E] || '').trim(),
+        Año:       parseInt(c[idx.Y]) || null,
+        Portada:   idx.P >= 0 ? (c[idx.P] || '').trim() : '',
+        Resumen:   idx.R >= 0 ? (c[idx.R] || '').trim() : '',
+      };
+      if (!nb.Titulo) continue;
+      const existing = books.findIndex(b => b.ISBN === nb.ISBN && nb.ISBN !== 'Sin ISBN');
+      if (existing >= 0) {
+        // Actualizar portada y resumen si se proporcionan
+        if (nb.Portada) books[existing].Portada = nb.Portada;
+        if (nb.Resumen) books[existing].Resumen = nb.Resumen;
+        updated++;
+      } else {
+        books.push(nb); added++;
+      }
+    }
 
-  // Refresh filters
-  const editSel = document.getElementById('editorialFilter');
-  const cur = editSel.value;
-  while (editSel.options.length > 1) editSel.remove(1);
-  [...new Set(books.map(b => b.Editorial.trim()))].sort().forEach(e => {
-    const o = document.createElement('option'); o.value = e; o.textContent = e; editSel.appendChild(o);
-  });
-  editSel.value = cur;
-
-  renderGrid();
-  alert(`✅ Se importaron ${added} libro${added !== 1 ? 's' : ''} correctamente.`);
+    event.target.value = '';
+    updateStats(); populateFilters(); renderGrid();
+    alert(`✅ Importación completada:\n• ${added} libros nuevos agregados\n• ${updated} libros actualizados`);
+  };
+  reader.readAsText(file, 'UTF-8');
 }
 
-// ── UTILS ──────────────────────────────────────────────────────────────
-function escHtml(s) {
+// Parser CSV que maneja comillas y comas dentro de campos
+function parseCSVLine(line) {
+  const result = []; let cur = ''; let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { inQuotes = !inQuotes; }
+    else if (ch === ',' && !inQuotes) { result.push(cur); cur = ''; }
+    else { cur += ch; }
+  }
+  result.push(cur);
+  return result.map(s => s.replace(/^"|"$/g, '').trim());
+}
+
+function esc(s) {
   return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(null,true); closeImport(null,true); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(null, true); });
 init();
 </script>
 </body>
