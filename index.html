@@ -368,10 +368,56 @@ function amazonLink(isbn13) {
   return `https://www.amazon.com/dp/${isbn10}`;
 }
 
+// ── GOOGLE SHEETS ────────────────────────────────────────────
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSWctXMgYWTRMKBDgSyTdGmeBIvASaHhBTprBwUFvZplZK3pXBXH2EyRyOeWlQtPA/pub?gid=1480362879&single=true&output=csv';
+
+async function loadFromSheet() {
+  const banner = document.getElementById('loadBanner');
+  try {
+    banner.style.display = 'flex';
+    const res = await fetch(SHEET_CSV_URL);
+    if (!res.ok) throw new Error('Error al cargar');
+    const text = await res.text();
+    const lines = text.split('\n').filter(l => l.trim());
+    if (lines.length < 2) throw new Error('Planilla vacía');
+    const headers = parseCSVLine(lines[0]).map(h => h.trim());
+    const ix = {
+      T: headers.findIndex(h => /titulo/i.test(h)),
+      I: headers.findIndex(h => /isbn/i.test(h)),
+      A: headers.findIndex(h => /autor/i.test(h)),
+      E: headers.findIndex(h => /editorial/i.test(h)),
+      Y: headers.findIndex(h => /a[ñn]o/i.test(h)),
+      P: headers.findIndex(h => /portada|url/i.test(h)),
+      R: headers.findIndex(h => /resumen/i.test(h)),
+    };
+    const loaded = [];
+    for (let i = 1; i < lines.length; i++) {
+      const c = parseCSVLine(lines[i]);
+      const b = {
+        Titulo:    (c[ix.T] || '').trim(),
+        ISBN:      (c[ix.I] || 'Sin ISBN').trim(),
+        Autor:     (c[ix.A] || '').trim(),
+        Editorial: (c[ix.E] || '').trim(),
+        Año:       parseInt(c[ix.Y]) || null,
+        Portada:   ix.P >= 0 ? (c[ix.P] || '').trim() : '',
+        Resumen:   ix.R >= 0 ? (c[ix.R] || '').trim() : '',
+      };
+      if (b.Titulo) loaded.push(b);
+    }
+    if (loaded.length > 0) {
+      books = loaded;
+      console.log('✓ ' + loaded.length + ' libros cargados desde Google Sheets');
+    }
+  } catch(e) {
+    console.warn('Usando datos locales:', e.message);
+  } finally {
+    banner.style.display = 'none';
+    updateStats(); populateFilters(); renderGrid();
+  }
+}
+
 function init() {
-  updateStats();
-  populateFilters();
-  renderGrid();
+  loadFromSheet();
 }
 
 function updateStats() {
@@ -420,9 +466,8 @@ function renderGrid() {
     card.style.animationDelay = (i * 28) + 'ms';
     card.onclick = () => openModal(book);
     const hasISBN_ = book.ISBN && book.ISBN !== 'Sin ISBN';
-    // Portada manual si existe, si no Amazon automático
-    const coverUrl_ = book.Portada ? book.Portada : (hasISBN_ ? amazonCover(book.ISBN) : null);
-    const shopUrl_  = hasISBN_ ? amazonLink(book.ISBN) : null;
+    const coverUrl_ = hasISBN_ ? amazonCover(book.ISBN) : null;
+    const shopUrl_  = hasISBN_ ? amazonLink(book.ISBN)  : null;
     card.innerHTML = `
       <div class="card-cover">
         ${coverUrl_
@@ -446,9 +491,8 @@ function renderGrid() {
 // ── MODAL ─────────────────────────────────────────────────────
 function openModal(book) {
   const hasISBN = book.ISBN && book.ISBN !== 'Sin ISBN';
-  // Portada manual si existe, si no Amazon automático
-  const mCoverUrl = book.Portada ? book.Portada : (hasISBN ? amazonCover(book.ISBN) : null);
-  const mShopUrl  = hasISBN ? amazonLink(book.ISBN) : null;
+  const mCoverUrl = hasISBN ? amazonCover(book.ISBN) : null;
+  const mShopUrl  = hasISBN ? amazonLink(book.ISBN)  : null;
   document.getElementById('mCover').innerHTML = mCoverUrl
     ? `<a href="${mShopUrl}" target="_blank" rel="noopener" title="Ver en Amazon" style="display:block">
          <img src="${mCoverUrl}" alt="Portada" onerror="this.parentElement.outerHTML='<div class=no-cover style=padding:2rem><span>📖</span></div>'">
@@ -545,5 +589,12 @@ function esc(s) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(null, true); });
 init();
 </script>
+<!-- Banner de carga -->
+<div id="loadBanner" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--forest);color:#F4EFE6;padding:.6rem 1.4rem;border-radius:30px;font-size:.8rem;align-items:center;gap:.6rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);">
+  <div style="width:14px;height:14px;border:2px solid rgba(244,239,230,.3);border-top-color:#F4EFE6;border-radius:50%;animation:spin .7s linear infinite;"></div>
+  Actualizando desde Google Sheets…
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg);}}</style>
+
 </body>
 </html>
