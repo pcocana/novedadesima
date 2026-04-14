@@ -470,10 +470,12 @@ function renderGrid() {
     const shopUrl_  = hasISBN_ ? amazonLink(book.ISBN) : null;
     card.innerHTML = `
       <div class="card-cover">
-        ${coverUrl_
+        ${coverUrl_ && shopUrl_
           ? `<a href="${shopUrl_}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Ver en Amazon">
                <img src="${coverUrl_}" alt="Portada" loading="lazy" onerror="this.parentElement.outerHTML='<div class=no-cover><span>📖</span></div>'">
              </a>`
+          : coverUrl_
+          ? `<img src="${coverUrl_}" alt="Portada" loading="lazy" onerror="this.outerHTML='<div class=no-cover><span>📖</span></div>'">`
           : `<div class="no-cover"><span>📖</span>${esc(book.Titulo)}</div>`}
       </div>
       <div class="card-body">
@@ -493,10 +495,12 @@ function openModal(book) {
   const hasISBN = book.ISBN && book.ISBN !== 'Sin ISBN';
   const mCoverUrl = (book.Portada && book.Portada.startsWith('http')) ? book.Portada : (hasISBN ? amazonCover(book.ISBN) : null);
   const mShopUrl  = hasISBN ? amazonLink(book.ISBN) : null;
-  document.getElementById('mCover').innerHTML = mCoverUrl
+  document.getElementById('mCover').innerHTML = mCoverUrl && mShopUrl
     ? `<a href="${mShopUrl}" target="_blank" rel="noopener" title="Ver en Amazon" style="display:block">
          <img src="${mCoverUrl}" alt="Portada" onerror="this.parentElement.outerHTML='<div class=no-cover style=padding:2rem><span>📖</span></div>'">
        </a>`
+    : mCoverUrl
+    ? `<img src="${mCoverUrl}" alt="Portada" style="width:100%;display:block" onerror="this.outerHTML='<div class=no-cover style=padding:2rem><span>📖</span></div>'">`
     : `<div class="no-cover" style="padding:2rem;align-self:center"><span>📖</span>${esc(book.Titulo)}</div>`;
   document.getElementById('mTitle').textContent  = book.Titulo;
   document.getElementById('mAuthor').textContent = book.Autor;
