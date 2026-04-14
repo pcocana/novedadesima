@@ -388,6 +388,7 @@ async function loadFromSheet() {
       P: headers.findIndex(h => /portada|url.?imagen|url/i.test(h)),
       R: headers.findIndex(h => /resumen/i.test(h)),
       O: headers.findIndex(h => /observ/i.test(h)),
+      L: headers.findIndex(h => /enlace|link/i.test(h)),
     };
     const loaded = [];
     for (let i = 1; i < lines.length; i++) {
@@ -401,6 +402,7 @@ async function loadFromSheet() {
         Portada:   ix.P >= 0 ? (c[ix.P] || '').trim() : '',
         Resumen:   ix.R >= 0 ? (c[ix.R] || '').trim() : '',
         Obs:       ix.O >= 0 ? (c[ix.O] || '').trim() : '',
+        Enlace:    ix.L >= 0 ? (c[ix.L] || '').trim() : '',
       };
       if (b.Titulo) loaded.push(b);
     }
@@ -466,7 +468,7 @@ function renderGrid() {
     card.onclick = () => openModal(book);
     const hasISBN_ = book.ISBN && book.ISBN !== 'Sin ISBN';
     const coverUrl_ = (book.Portada && book.Portada.startsWith('http')) ? book.Portada : (hasISBN_ ? amazonCover(book.ISBN) : null);
-    const shopUrl_  = hasISBN_ ? amazonLink(book.ISBN) : null;
+    const shopUrl_  = (book.Enlace && book.Enlace.startsWith('http')) ? book.Enlace : (hasISBN_ ? amazonLink(book.ISBN) : null);
     card.innerHTML = `
       <div class="card-cover">
         ${coverUrl_ && shopUrl_
@@ -494,7 +496,7 @@ function renderGrid() {
 function openModal(book) {
   const hasISBN = book.ISBN && book.ISBN !== 'Sin ISBN';
   const mCoverUrl = (book.Portada && book.Portada.startsWith('http')) ? book.Portada : (hasISBN ? amazonCover(book.ISBN) : null);
-  const mShopUrl  = hasISBN ? amazonLink(book.ISBN) : null;
+  const mShopUrl  = (book.Enlace && book.Enlace.startsWith('http')) ? book.Enlace : (hasISBN ? amazonLink(book.ISBN) : null);
   document.getElementById('mCover').innerHTML = mCoverUrl && mShopUrl
     ? `<a href="${mShopUrl}" target="_blank" rel="noopener" title="Ver en Amazon" style="display:block">
          <img src="${mCoverUrl}" alt="Portada" onerror="this.parentElement.outerHTML='<div class=no-cover style=padding:2rem><span>📖</span></div>'">
@@ -508,7 +510,7 @@ function openModal(book) {
     <span class="pill"><strong>Año:</strong> ${book.Año || '—'}</span>
     <span class="pill"><strong>Editorial:</strong> ${esc(book.Editorial)}</span>
     ${hasISBN ? `<span class="pill"><strong>ISBN:</strong> ${book.ISBN}</span>` : ''}
-    ${mShopUrl ? `<a href="${mShopUrl}" target="_blank" rel="noopener" class="pill" style="color:var(--gold);text-decoration:none;border-color:rgba(160,115,42,.4)">🛒 Ver en Amazon</a>` : ''}
+    ${mShopUrl ? `<a href="${mShopUrl}" target="_blank" rel="noopener" class="pill" style="color:var(--gold);text-decoration:none;border-color:rgba(160,115,42,.4)">${book.Enlace ? '📖 Ver en catálogo' : '🛒 Ver en Amazon'}</a>` : ''}
     ${book.Obs ? `<span class="pill" style="background:var(--gold);color:#fff;border-color:var(--gold);font-weight:500">📋 ${esc(book.Obs)}</span>` : ''}`;
   document.getElementById('mResumen').innerHTML = book.Resumen
     ? `<p class="resumen-text">${esc(book.Resumen)}</p>`
