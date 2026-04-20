@@ -438,9 +438,6 @@ function populateFilters() {
   [...new Set(books.map(b => b.Editorial?.trim()).filter(Boolean))].sort().forEach(e => {
     const o = document.createElement('option'); o.value = e; o.textContent = e; eS.appendChild(o);
   });
-  [...new Set(books.map(b => b.Año).filter(Boolean))].sort((a,b) => b-a).forEach(y => {
-    const o = document.createElement('option'); o.value = y; o.textContent = y; yS.appendChild(o);
-  });
   if (sS) {
     [...new Set(books.map(b => b.Semestre).filter(Boolean))].sort().reverse().forEach(s => {
       const o = document.createElement('option'); o.value = s; o.textContent = s; sS.appendChild(o);
