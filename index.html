@@ -269,9 +269,6 @@
   <select class="filter-select" id="editFilter" onchange="renderGrid()">
     <option value="">Todas las editoriales</option>
   </select>
-  <select class="filter-select" id="yearFilter" onchange="renderGrid()">
-    <option value="">Años de edición</option>
-  </select>
   <select class="filter-select" id="semFilter" onchange="renderGrid()">
     <option value="">Todos los años</option>
   </select>
@@ -435,10 +432,8 @@ function updateStats() {
 
 function populateFilters() {
   const eS = document.getElementById('editFilter');
-  const yS = document.getElementById('yearFilter');
   const sS = document.getElementById('semFilter');
   while (eS.options.length > 1) eS.remove(1);
-  while (yS.options.length > 1) yS.remove(1);
   if (sS) while (sS.options.length > 1) sS.remove(1);
   [...new Set(books.map(b => b.Editorial?.trim()).filter(Boolean))].sort().forEach(e => {
     const o = document.createElement('option'); o.value = e; o.textContent = e; eS.appendChild(o);
@@ -457,17 +452,16 @@ function populateFilters() {
 function renderGrid() {
   const q  = document.getElementById('searchInput').value.toLowerCase();
   const eF = document.getElementById('editFilter').value;
-  const yF = document.getElementById('yearFilter').value;
+  const yF = '';
   const sF = document.getElementById('semFilter')?.value || '';
   const cF = document.getElementById('coverFilter').value;
 
   const filtered = books.filter(b => {
     const mQ = !q || [b.Titulo, b.Autor, b.Editorial].some(f => f?.toLowerCase().includes(q));
     const mE = !eF || b.Editorial?.trim() === eF;
-    const mY = !yF || String(b.Año) === yF;
     const mC = !cF || (cF === 'con' ? !!b.Portada : !b.Portada);
     const mS = !sF || b.Semestre === sF;
-    return mQ && mE && mY && mC && mS;
+    return mQ && mE && mC && mS;
   });
 
   document.getElementById('countLabel').textContent = `${filtered.length} título${filtered.length !== 1 ? 's' : ''}`;
