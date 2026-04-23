@@ -117,6 +117,7 @@
     width: 100%; aspect-ratio: 2/3;
     background: linear-gradient(150deg, #2D4A3E, #152B22);
     display: flex; align-items: center; justify-content: center; overflow: hidden;
+    position: relative;
   }
   .card-cover img { width:100%;height:100%;object-fit:cover;display: block; }
   .cover-badge{position:absolute;top:8px;left:8px;background:var(--gold);color:#fff;font-size:.62rem;font-weight:600;padding:.25rem .55rem;border-radius:4px;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 2px 8px rgba(0,0,0,.3);pointer-events:none;z-index:2;}
@@ -389,7 +390,7 @@ async function loadFromSheet() {
       R: headers.findIndex(h => /resumen/i.test(h)),
       O: headers.findIndex(h => /observ/i.test(h)),
       L: headers.findIndex(h => /enlace|link/i.test(h)),
-      S: headers.findIndex(h => /semestre/i.test(h)),
+      S: headers.findIndex(h => /semestre|a[ñn]o.?compra/i.test(h)),
     };
     const loaded = [];
     for (let i = 1; i < lines.length; i++) {
@@ -481,9 +482,15 @@ function renderGrid() {
                <img src="${coverUrl_}" alt="Portada" loading="lazy" onerror="this.parentElement.outerHTML='<div class=no-cover><span>📖</span></div>'">
              </a>`
           : coverUrl_
-          ? `<img src="${coverUrl_}" alt="Portada" loading="lazy" onerror="this.outerHTML='<div class=no-cover><span>📖</span></div>'">`
+          ? `<img src="${coverUrl_}" alt="Portada" loading="lazy" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=no-cover><span>📖</span></div>')">`
           : `<div class="no-cover"><span>📖</span>${esc(book.Titulo)}</div>`}
         ${book.Obs ? `<span class="cover-badge">${esc(book.Obs)}</span>` : ''}
+        ${(book.Asignatura || book.Carrera || book.TipoBib) ? `
+        <div class="card-tip">
+          ${book.Asignatura ? `<div class="tip-title">📚 ${esc(book.Asignatura)}</div>` : ''}
+          ${book.Carrera   ? `<div class="tip-row"><span>🎓</span>${esc(book.Carrera)}</div>` : ''}
+          ${book.TipoBib   ? `<div><span class="tip-badge ${book.TipoBib.toLowerCase().includes('comp')?'comp':''}">${esc(book.TipoBib)}</span></div>` : ''}
+        </div>` : ''}
       </div>
       <div class="card-body">
         <div class="card-title">${esc(book.Titulo)}</div>
