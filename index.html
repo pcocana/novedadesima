@@ -116,7 +116,7 @@
   .card-cover {
     width: 100%; aspect-ratio: 2/3;
     background: linear-gradient(150deg, #2D4A3E, #152B22);
-    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
     position: relative;
   }
   .card-cover img { width:100%;height:100%;object-fit:cover;display: block; }
@@ -231,6 +231,22 @@
 
   /* FILE input hidden */
   #fileInput { display: none; }
+
+  /* ── TOOLTIP PORTADA ── */
+  .card { overflow: hidden; }
+  .card-tip {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(10,20,15,.97) 60%, transparent);
+    color: #F4EFE6; padding: 1.2rem .8rem .7rem;
+    transform: translateY(100%); transition: transform .25s ease;
+    pointer-events: none; z-index: 3;
+  }
+  .card:hover .card-tip { transform: translateY(0); }
+  .tip-title { font-family: 'Cormorant Garamond', serif; font-size: .82rem; font-weight: 600; line-height: 1.3; margin-bottom: .35rem; }
+  .tip-row { font-size: .68rem; color: rgba(244,239,230,.75); line-height: 1.5; display: flex; align-items: flex-start; gap: .3rem; }
+  .tip-row span { color: var(--gold); flex-shrink: 0; }
+  .tip-badge { display: inline-block; background: var(--gold); color: #fff; font-size: .6rem; font-weight: 600; padding: .15rem .45rem; border-radius: 3px; margin-top: .3rem; text-transform: uppercase; letter-spacing: .5px; }
+  .tip-badge.comp { background: #2D6A4F; }
 </style>
 </head>
 <body>
@@ -391,6 +407,9 @@ async function loadFromSheet() {
       O: headers.findIndex(h => /observ/i.test(h)),
       L: headers.findIndex(h => /enlace|link/i.test(h)),
       S: headers.findIndex(h => /semestre|a[ñn]o.?compra/i.test(h)),
+      AS: headers.findIndex(h => /asignatura/i.test(h)),
+      CA: headers.findIndex(h => /carrera/i.test(h)),
+      TB: headers.findIndex(h => /tipo.?bibliograf/i.test(h)),
     };
     const loaded = [];
     for (let i = 1; i < lines.length; i++) {
@@ -406,6 +425,9 @@ async function loadFromSheet() {
         Obs:       ix.O >= 0 ? (c[ix.O] || '').trim() : '',
         Enlace:    ix.L >= 0 ? (c[ix.L] || '').trim() : '',
         Semestre:  ix.S >= 0 ? (c[ix.S] || '').trim() : '',
+        Asignatura: ix.AS >= 0 ? (c[ix.AS] || '').trim() : '',
+        Carrera:    ix.CA >= 0 ? (c[ix.CA] || '').trim() : '',
+        TipoBib:    ix.TB >= 0 ? (c[ix.TB] || '').trim() : '',
       };
       if (b.Titulo) loaded.push(b);
     }
@@ -485,13 +507,13 @@ function renderGrid() {
           ? `<img src="${coverUrl_}" alt="Portada" loading="lazy" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=no-cover><span>📖</span></div>')">`
           : `<div class="no-cover"><span>📖</span>${esc(book.Titulo)}</div>`}
         ${book.Obs ? `<span class="cover-badge">${esc(book.Obs)}</span>` : ''}
-        ${(book.Asignatura || book.Carrera || book.TipoBib) ? `
-        <div class="card-tip">
-          ${book.Asignatura ? `<div class="tip-title">📚 ${esc(book.Asignatura)}</div>` : ''}
-          ${book.Carrera   ? `<div class="tip-row"><span>🎓</span>${esc(book.Carrera)}</div>` : ''}
-          ${book.TipoBib   ? `<div><span class="tip-badge ${book.TipoBib.toLowerCase().includes('comp')?'comp':''}">${esc(book.TipoBib)}</span></div>` : ''}
-        </div>` : ''}
       </div>
+      ${(book.Asignatura || book.Carrera || book.TipoBib) ? `
+      <div class="card-tip">
+        ${book.Asignatura ? `<div class="tip-title">📚 ${esc(book.Asignatura)}</div>` : ''}
+        ${book.Carrera   ? `<div class="tip-row"><span>🎓</span>${esc(book.Carrera)}</div>` : ''}
+        ${book.TipoBib   ? `<div><span class="tip-badge ${book.TipoBib.toLowerCase().includes('comp')?'comp':''}">${esc(book.TipoBib)}</span></div>` : ''}
+      </div>` : ''}
       <div class="card-body">
         <div class="card-title">${esc(book.Titulo)}</div>
         <div class="card-author">${esc(book.Autor)}</div>
