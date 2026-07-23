@@ -10,7 +10,7 @@
     --bg:       #F4EFE6;
     --card:     #FDFAF5;
     --ink:      #1A1A1A;
-    --forest:   #1E3A2F;
+    --navy:     #3A4A75;   /* azul institucional PUCV */
     --gold:     #A0732A;
     --muted:    #7A6E65;
     --border:   #DDD5C4;
@@ -21,32 +21,8 @@
   body { background: var(--bg); color: var(--ink); font-family: 'Outfit', sans-serif; min-height: 100vh; }
 
   /* ── HEADER ── */
-  header {
-    background: var(--forest);
-    padding: 0 2.5rem;
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 24px rgba(0,0,0,.2);
-  }
-  .header-inner {
-    max-width: 1300px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
-  }
-  .brand { display: flex; align-items: center; gap: 14px; }
-  .brand-icon {
-    width: 38px; height: 38px; background: var(--gold);
-    border-radius: 8px; display: flex; align-items: center; justify-content: center;
-    font-size: 19px; flex-shrink: 0;
-  }
-  .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: #F4EFE6; font-weight: 600; letter-spacing: .3px; }
-  .brand-sub  { font-size: .65rem; color: rgba(244,239,230,.5); letter-spacing: 2px; text-transform: uppercase; margin-top: 1px; }
-  .btn-csv {
-    background: rgba(244,239,230,.1); border: 1px solid rgba(244,239,230,.25);
-    color: #F4EFE6; padding: .45rem 1.1rem; border-radius: 6px;
-    font-family: 'Outfit', sans-serif; font-size: .8rem; cursor: pointer;
-    transition: background .2s; display: flex; align-items: center; gap: 6px;
-  }
-  .btn-csv:hover { background: rgba(244,239,230,.18); }
+  /* El encabezado lleva sus estilos en la propia etiqueta <header>.
+     Sin padding lateral: la barra azul debe llegar al borde. */
 
   /* ── HERO ── */
   .hero {
@@ -109,7 +85,7 @@
 
   .card-cover {
     width: 100%; aspect-ratio: 2/3;
-    background: linear-gradient(150deg, #2D4A3E, #152B22);
+    background: linear-gradient(150deg, #46567F, #232C4A);
     display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
     position: relative;
   }
@@ -130,7 +106,7 @@
   }
   .card-author { font-size: .72rem; color: var(--muted); margin-top: .3rem; }
   .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: .65rem; }
-  .card-year { background: var(--forest); color:#ffffff; font-size: .68rem; font-weight: 500; padding: .2rem .55rem; border-radius: 3px; }
+  .card-year { background: var(--navy); color:#ffffff; font-size: .68rem; font-weight: 500; padding: .2rem .55rem; border-radius: 3px; }
   .card-ed { font-size: .65rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 95px; }
 
   /* ── MODAL ── */
@@ -188,39 +164,6 @@
     display: flex; align-items: center; justify-content: center; z-index: 10;
   }
 
-  /* ── IMPORT PANEL ── */
-  .import-panel {
-    position: fixed; inset: 0; z-index: 2000;
-    background: rgba(8,16,12,.8); backdrop-filter: blur(5px);
-    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
-    opacity: 0; pointer-events: none; transition: opacity .3s;
-  }
-  .import-panel.open { opacity: 1; pointer-events: all; }
-  .import-box {
-    background: var(--card); border-radius: 14px; max-width: 600px; width: 100%;
-    padding: 2.2rem; box-shadow: 0 24px 60px rgba(0,0,0,.3);
-  }
-  .import-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: .5rem; }
-  .import-box p { font-size: .85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.1rem; }
-  .import-box code { background: var(--bg); padding: .15rem .4rem; border-radius: 3px; font-size: .78rem; color: var(--forest); }
-  .import-box textarea {
-    width: 100%; height: 160px; border: 1.5px solid var(--border); border-radius: 8px;
-    padding: .8rem; font-family: monospace; font-size: .78rem; resize: vertical; outline: none;
-    background: var(--bg);
-  }
-  .import-box textarea:focus { border-color: var(--gold); }
-  .import-actions { display: flex; gap: .75rem; margin-top: 1.1rem; justify-content: flex-end; }
-  .btn-primary {
-    background: var(--forest); color: #F4EFE6; border: none;
-    padding: .6rem 1.3rem; border-radius: 7px; font-family: 'Outfit', sans-serif;
-    font-size: .875rem; cursor: pointer; transition: opacity .2s;
-  }
-  .btn-primary:hover { opacity: .85; }
-  .btn-ghost {
-    background: transparent; border: 1.5px solid var(--border); color: var(--ink);
-    padding: .6rem 1.3rem; border-radius: 7px; font-family: 'Outfit', sans-serif;
-    font-size: .875rem; cursor: pointer;
-  }
   .no-results { text-align: center; padding: 5rem 2rem; color: var(--muted); font-style: italic; }
 
   /* FILE input hidden */
@@ -230,7 +173,7 @@
   .card { overflow: hidden; }
   .card-tip {
     position: absolute; bottom: 0; left: 0; right: 0;
-    background: linear-gradient(to top, rgba(10,20,15,.97) 60%, transparent);
+    background: linear-gradient(to top, rgba(20,26,45,.97) 60%, transparent);
     color: #F4EFE6; padding: 1.2rem .8rem .7rem;
     transform: translateY(100%); transition: transform .25s ease;
     pointer-events: none; z-index: 3;
@@ -654,7 +597,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(n
 document.addEventListener('DOMContentLoaded', init);
 </script>
 <!-- Banner de carga -->
-<div id="loadBanner" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--forest);color:#F4EFE6;padding:.6rem 1.4rem;border-radius:30px;font-size:.8rem;align-items:center;gap:.6rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);">
+<div id="loadBanner" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--navy);color:#F4EFE6;padding:.6rem 1.4rem;border-radius:30px;font-size:.8rem;align-items:center;gap:.6rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.25);">
   <div style="width:14px;height:14px;border:2px solid rgba(244,239,230,.3);border-top-color:#F4EFE6;border-radius:50%;animation:spin .7s linear infinite;"></div>
   Actualizando desde Google Sheets…
 </div>
