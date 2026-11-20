@@ -358,9 +358,9 @@ async function loadFromSheet() {
     const res = await fetch(SHEET_CSV_URL);
     if (!res.ok) throw new Error('Error al cargar');
     const text = await res.text();
-    const lines = text.split('\n').filter(l => l.trim());
-    if (lines.length < 2) throw new Error('Planilla vacía');
-    const headers = parseCSVLine(lines[0]).map(h => h.trim());
+    const rows = parseCSVText(text);
+    if (rows.length < 2) throw new Error('Planilla vacía');
+    const headers = rows[0].map(h => h.trim());
     const ix = {
       T: headers.findIndex(h => /titulo/i.test(h)),
       I: headers.findIndex(h => /isbn/i.test(h)),
@@ -377,8 +377,8 @@ async function loadFromSheet() {
       TB: headers.findIndex(h => /tipo.?bibliograf/i.test(h)),
     };
     const loaded = [];
-    for (let i = 1; i < lines.length; i++) {
-      const c = parseCSVLine(lines[i]);
+    for (let i = 1; i < rows.length; i++) {
+      const c = rows[i];
       const b = {
         Titulo:    (c[ix.T] || '').trim(),
         ISBN:      (c[ix.I] || 'Sin ISBN').trim(),
@@ -534,10 +534,10 @@ function importCSV(event) {
   const reader = new FileReader();
   reader.onload = e => {
     const text = e.target.result;
-    const lines = text.split('\n').filter(l => l.trim());
-    if (lines.length < 2) { alert('El CSV está vacío o tiene formato incorrecto.'); return; }
+    const rows = parseCSVText(text);
+    if (rows.length < 2) { alert('El CSV está vacío o tiene formato incorrecto.'); return; }
 
-    const headers = parseCSVLine(lines[0]).map(h => h.trim());
+    const headers = rows[0].map(h => h.trim());
     const idx = {
       T: headers.findIndex(h => /titulo/i.test(h)),
       I: headers.findIndex(h => /isbn/i.test(h)),
@@ -549,8 +549,8 @@ function importCSV(event) {
     };
 
     let added = 0, updated = 0;
-    for (let i = 1; i < lines.length; i++) {
-      const c = parseCSVLine(lines[i]);
+    for (let i = 1; i < rows.length; i++) {
+      const c = rows[i];
       const nb = {
         Titulo:    (c[idx.T] || '').trim(),
         ISBN:      (c[idx.I] || 'Sin ISBN').trim(),
@@ -579,7 +579,39 @@ function importCSV(event) {
   reader.readAsText(file, 'UTF-8');
 }
 
-// Parser CSV que maneja comillas y comas dentro de campos
+// Parser CSV completo: respeta comillas, comas y SALTOS DE LÍNEA dentro de una celda.
+// Devuelve un arreglo de filas (cada fila es un arreglo de campos). Los saltos de
+// línea internos de una celda se convierten en un espacio.
+function parseCSVText(text) {
+  const rows = []; let row = []; let cur = ''; let inQuotes = false;
+  text = text.replace(/^\uFEFF/, '');
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (text[i + 1] === '"') { cur += '"'; i++; }   // comilla escapada ""
+        else inQuotes = false;
+      } else if (ch === '\n' || ch === '\r') {
+        if (ch === '\r' && text[i + 1] === '\n') i++;
+        cur += ' ';                                       // salto interno -> espacio
+      } else cur += ch;
+    } else if (ch === '"') {
+      inQuotes = true;
+    } else if (ch === ',') {
+      row.push(cur); cur = '';
+    } else if (ch === '\n' || ch === '\r') {
+      if (ch === '\r' && text[i + 1] === '\n') i++;
+      row.push(cur); cur = '';
+      if (row.some(v => v.trim() !== '')) rows.push(row.map(v => v.replace(/\s+/g, ' ').trim()));
+      row = [];
+    } else cur += ch;
+  }
+  row.push(cur);
+  if (row.some(v => v.trim() !== '')) rows.push(row.map(v => v.replace(/\s+/g, ' ').trim()));
+  return rows;
+}
+
+// (Antiguo) Parser de una sola línea; ya no se usa para cargar datos.
 function parseCSVLine(line) {
   const result = []; let cur = ''; let inQuotes = false;
   for (let i = 0; i < line.length; i++) {
