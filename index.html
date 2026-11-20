@@ -397,6 +397,9 @@ async function loadFromSheet() {
       if (b.Titulo) loaded.push(b);
     }
     if (loaded.length > 0) {
+      // Los últimos libros ingresados quedan al final de la planilla:
+      // se invierte el orden para que aparezcan primero en la grilla.
+      loaded.reverse();
       books = loaded;
       console.log('✓ ' + loaded.length + ' libros cargados desde Google Sheets');
     }
